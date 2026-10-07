@@ -126,6 +126,7 @@
   .hero-timer b { color: var(--accent); font-weight: 800; }
 </style>
 </head>
+<style>
   .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -386,9 +387,6 @@
 </div>
 
 <script>
-/* ============================================================
-   SVG-ИКОНКИ (буква G на брусках и монете)
-   ============================================================ */
 const ICONS = {
   ingot100: `<svg viewBox="0 0 64 64" fill="none">
     <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
@@ -449,10 +447,7 @@ const ICONS = {
 };
    </script>
    <script>
-/* ============================================================
-   НАСТРОЙКИ САЙТА
-   ============================================================ */
-const SETTINGS_KEY = 'ardrop_settings_v4';
+const SETTINGS_KEY = 'ardrop_settings_v5';
 let settings = loadSettings();
 
 function loadSettings() {
@@ -481,9 +476,6 @@ function applySiteName(name) {
   document.title = name + ' — Магазин';
 }
 
-/* ============================================================
-   КАТАЛОГ
-   ============================================================ */
 const CATALOG = {
   shop: [
     { id: 's1', qty: 100,  price: 49,   icon: 'coin',      discount: 0 },
@@ -506,11 +498,7 @@ const CATALOG = {
 };
 
 let currentTab = 'shop';
-
-/* ============================================================
-   СОСТОЯНИЕ
-   ============================================================ */
-const STATE_KEY = 'ardrop_state_v4';
+const STATE_KEY = 'ardrop_state_v5';
 let state = loadState();
 
 function loadState() {
@@ -534,9 +522,6 @@ const gridEl    = document.getElementById('grid');
 const balanceEl = document.getElementById('balance');
 const timerEl   = document.getElementById('timer');
 
-/* ============================================================
-   РЕНДЕР
-   ============================================================ */
 function render() {
   const list = CATALOG[currentTab] || [];
   gridEl.innerHTML = '';
@@ -568,9 +553,6 @@ function render() {
   });
 }
 
-/* ============================================================
-   ПОКУПКА
-   ============================================================ */
 gridEl.addEventListener('click', e => {
   const btn = e.target.closest('button.buy');
   if (!btn || btn.disabled) return;
@@ -589,9 +571,6 @@ gridEl.addEventListener('click', e => {
   render();
 });
 
-/* ============================================================
-   ВКЛАДКИ
-   ============================================================ */
 document.querySelectorAll('.tabs button').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
@@ -601,9 +580,6 @@ document.querySelectorAll('.tabs button').forEach(btn => {
   });
 });
 
-/* ============================================================
-   НИЖНЕЕ МЕНЮ
-   ============================================================ */
 document.querySelectorAll('.bottom-nav button').forEach(btn => {
   btn.addEventListener('click', () => {
     const nav = btn.dataset.nav;
@@ -618,9 +594,6 @@ document.querySelectorAll('.bottom-nav button').forEach(btn => {
   });
 });
 
-/* ============================================================
-   ТАЙМЕР
-   ============================================================ */
 function updateTimer() {
   const end = new Date();
   end.setDate(end.getDate() + 18);
@@ -634,9 +607,6 @@ function updateTimer() {
 }
 setInterval(updateTimer, 30000);
 
-/* ============================================================
-   АДМИНКА: 5 КЛИКОВ ПО ЛОГОТИПУ
-   ============================================================ */
 let clickCount = 0;
 let clickTimer = null;
 brandBtn.addEventListener('click', () => {
@@ -711,9 +681,6 @@ document.addEventListener('keydown', e => {
   }
 });
 
-/* ============================================================
-   СТАРТ
-   ============================================================ */
 applySiteName(settings.name);
 balanceEl.textContent = state.balance;
 updateTimer();
