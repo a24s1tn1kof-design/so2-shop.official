@@ -169,6 +169,7 @@
     font-weight: 800; font-size: 14px;
     cursor: pointer; font-family: inherit; letter-spacing: .5px;
   }
+  .card .buy:active { transform: scale(.97); }
   .empty {
     grid-column: 1 / -1;
     text-align: center;
@@ -176,6 +177,162 @@
     padding: 60px 20px;
     font-size: 14px;
   }
+
+  /* ---------- Корзина ---------- */
+  .cart-page {
+    padding: 14px 14px 200px;
+  }
+  .cart-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .cart-head h2 {
+    font-size: 20px; font-weight: 800;
+  }
+  .cart-head .count {
+    color: var(--muted); font-size: 13px; font-weight: 600;
+  }
+  .cart-empty {
+    text-align: center;
+    padding: 80px 20px;
+  }
+  .cart-empty h3 {
+    font-size: 18px; font-weight: 800;
+    margin-bottom: 10px; text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .cart-empty p {
+    color: var(--muted); font-size: 14px;
+    line-height: 1.5; max-width: 300px; margin: 0 auto 24px;
+  }
+  .cart-empty .btn-orange {
+    background: linear-gradient(180deg, var(--accent-2), var(--accent));
+    color: #0b0e13;
+    border: none; padding: 14px 28px; border-radius: 10px;
+    font-weight: 800; font-size: 15px;
+    cursor: pointer; font-family: inherit;
+    letter-spacing: .5px;
+    width: 100%; max-width: 320px;
+  }
+
+  .cart-item {
+    display: flex; gap: 12px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+  .cart-item .thumb {
+    width: 72px; height: 72px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #1c222c, #12161d);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border);
+  }
+  .cart-item .thumb svg { width: 44px !important; height: 44px !important; }
+  .cart-item .body { flex: 1; min-width: 0; }
+  .cart-item .price-row {
+    color: var(--accent); font-weight: 800; font-size: 15px;
+  }
+  .cart-item .title {
+    font-size: 13px; color: var(--text);
+    margin: 2px 0 6px; font-weight: 600;
+    line-height: 1.3;
+  }
+  .cart-item .qty-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    padding: 3px 8px; border-radius: 6px;
+    font-size: 12px; font-weight: 700;
+    color: var(--accent);
+  }
+  .cart-item .qty-tag svg { width: 12px !important; height: 12px !important; }
+  .cart-item .bottom {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 8px;
+  }
+  .cart-item .trash {
+    width: 36px; height: 36px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; color: var(--muted);
+    flex-shrink: 0;
+  }
+  .cart-item .trash svg { width: 16px !important; height: 16px !important; }
+  .cart-item .buy-btn {
+    background: linear-gradient(180deg, var(--accent-2), var(--accent));
+    color: #0b0e13;
+    border: none; padding: 8px 16px; border-radius: 8px;
+    font-weight: 800; font-size: 13px;
+    cursor: pointer; font-family: inherit;
+    flex-shrink: 0;
+  }
+  .cart-item .stepper {
+    margin-left: auto;
+    display: flex; align-items: center; gap: 10px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 4px 8px;
+  }
+  .cart-item .stepper button {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-size: 18px;
+    width: 22px; height: 22px;
+    cursor: pointer; font-family: inherit;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+  }
+  .cart-item .stepper span {
+    min-width: 20px; text-align: center;
+    font-weight: 800; font-size: 14px;
+  }
+
+  .cart-summary {
+    position: sticky;
+    bottom: 76px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    margin-top: 16px;
+  }
+  .cart-summary .row {
+    display: flex; justify-content: space-between;
+    font-size: 14px; margin-bottom: 8px;
+  }
+  .cart-summary .row.discount { color: var(--red); }
+  .cart-summary .row.total {
+    font-size: 22px; font-weight: 900;
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .cart-summary .btn-buy {
+    width: 100%; margin-top: 14px;
+    background: linear-gradient(180deg, var(--accent-2), var(--accent));
+    color: #0b0e13; border: none;
+    padding: 14px; border-radius: 10px;
+    font-weight: 800; font-size: 15px;
+    cursor: pointer; font-family: inherit;
+    letter-spacing: .5px;
+  }
+  .cart-summary .btn-gift {
+    width: 100%; margin-top: 8px;
+    background: var(--panel-2);
+    color: var(--text); border: 1px solid var(--border);
+    padding: 14px; border-radius: 10px;
+    font-weight: 700; font-size: 14px;
+    cursor: pointer; font-family: inherit;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .cart-summary .btn-gift svg { width: 18px !important; height: 18px !important; }
 
   .bottom-nav {
     position: fixed; bottom: 0; left: 0; right: 0;
@@ -192,9 +349,19 @@
     font-size: 10px; font-weight: 600;
     padding: 6px 12px; border-radius: 10px;
     cursor: pointer; font-family: inherit; flex: 1;
+    position: relative;
   }
   .bottom-nav button svg { width: 22px !important; height: 22px !important; }
   .bottom-nav button.active { color: var(--accent); }
+  .bottom-nav button .nav-badge {
+    position: absolute;
+    top: 2px; right: 20%;
+    background: var(--red); color: #fff;
+    font-size: 10px; font-weight: 800;
+    border-radius: 10px;
+    padding: 1px 6px;
+    min-width: 18px; text-align: center;
+  }
 
   .modal-back {
     position: fixed; inset: 0;
@@ -278,49 +445,63 @@
   </div>
 </div>
 
-<div class="tabs">
+<div class="tabs" id="tabs">
   <button class="active" data-cat="shop">Battle Shop</button>
   <button data-cat="promo">Акции <span class="badge">3</span></button>
   <button data-cat="gold">Gold</button>
 </div>
 
-<div class="hero">
-  <svg class="hero-art" viewBox="0 0 200 200" fill="none">
-    <defs>
-      <linearGradient id="heroG" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#ffd76a"/>
-        <stop offset="100%" stop-color="#b87400"/>
-      </linearGradient>
-    </defs>
-    <path d="M100 10 L120 60 L180 70 L135 110 L150 170 L100 140 L50 170 L65 110 L20 70 L80 60 Z"
-          fill="url(#heroG)" opacity=".3"/>
-    <circle cx="100" cy="100" r="60" fill="none" stroke="url(#heroG)" stroke-width="2" opacity=".4"/>
-    <circle cx="100" cy="100" r="40" fill="none" stroke="url(#heroG)" stroke-width="1.5" opacity=".3"/>
-  </svg>
-  <div class="hero-content">
-    <div class="label">Сезон ArDrop</div>
-    <div class="title">GOLD<br>PASS</div>
-    <div class="subtitle">SEASON 1</div>
+<div id="viewShop">
+  <div class="hero">
+    <svg class="hero-art" viewBox="0 0 200 200" fill="none">
+      <defs>
+        <linearGradient id="heroG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#ffd76a"/>
+          <stop offset="100%" stop-color="#b87400"/>
+        </linearGradient>
+      </defs>
+      <path d="M100 10 L120 60 L180 70 L135 110 L150 170 L100 140 L50 170 L65 110 L20 70 L80 60 Z"
+            fill="url(#heroG)" opacity=".3"/>
+      <circle cx="100" cy="100" r="60" fill="none" stroke="url(#heroG)" stroke-width="2" opacity=".4"/>
+      <circle cx="100" cy="100" r="40" fill="none" stroke="url(#heroG)" stroke-width="1.5" opacity=".3"/>
+    </svg>
+    <div class="hero-content">
+      <div class="label">Сезон ArDrop</div>
+      <div class="title">GOLD<br>PASS</div>
+      <div class="subtitle">SEASON 1</div>
+    </div>
+    <div class="hero-timer">
+      ЗАКОНЧИТСЯ ЧЕРЕЗ: <b id="timer">18д 17ч 33м</b>
+    </div>
   </div>
-  <div class="hero-timer">
-    ЗАКОНЧИТСЯ ЧЕРЕЗ: <b id="timer">18д 17ч 33м</b>
-  </div>
+
+  <div class="grid" id="grid"></div>
 </div>
 
-<div class="grid" id="grid"></div>
-<div class="bottom-nav">
+<div id="viewCart" style="display:none;">
+  <div class="cart-page">
+    <div class="cart-head">
+      <h2>Купить на аккаунт</h2>
+      <div class="count" id="cartCount">0 товаров</div>
+    </div>
+    <div id="cartBody"></div>
+  </div>
+ </div>
+ <div class="bottom-nav" id="bottomNav">
   <button class="active" data-nav="home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 10 L12 3 L21 10 V20 a1 1 0 0 1-1 1 h-5 v-6 h-6 v6 H4 a1 1 0 0 1-1-1 Z"/>
     </svg>
     Главная
   </button>
-  <button data-nav="promo">
+  <button data-nav="cart">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 9 a2 2 0 0 1 2-2 h14 a2 2 0 0 1 2 2 v1 a2 2 0 0 0 0 4 v1 a2 2 0 0 1-2 2 H5 a2 2 0 0 1-2-2 v-1 a2 2 0 0 0 0-4 Z"/>
-      <path d="M13 7 v10" stroke-dasharray="2 2"/>
+      <path d="M3 4 h2 l2.5 12 h11 l2-8 H7"/>
+      <circle cx="9" cy="20" r="1.6"/>
+      <circle cx="17" cy="20" r="1.6"/>
     </svg>
-    Промокод
+    Корзина
+    <span class="nav-badge" id="navBadge" style="display:none;">0</span>
   </button>
   <button data-nav="topup">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -329,13 +510,12 @@
     </svg>
     Пополнить
   </button>
-  <button data-nav="gifts">
+  <button data-nav="promo">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3" y="8" width="18" height="13" rx="2"/>
-      <path d="M3 12 h18 M12 8 v13"/>
-      <path d="M12 8 a3 3 0 0 0 0-6 a3 3 0 0 0 0 6 Z"/>
+      <path d="M3 9 a2 2 0 0 1 2-2 h14 a2 2 0 0 1 2 2 v1 a2 2 0 0 0 0 4 v1 a2 2 0 0 1-2 2 H5 a2 2 0 0 1-2-2 v-1 a2 2 0 0 0 0-4 Z"/>
+      <path d="M13 7 v10" stroke-dasharray="2 2"/>
     </svg>
-    Подарки
+    Промокод
   </button>
   <button data-nav="profile">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -504,11 +684,19 @@ const ICONS = {
     <text x="31" y="47" text-anchor="middle" font-size="10" font-weight="900" fill="#6b3a00">G</text>
     <path d="M14 50 H56 V54 a3 3 0 0 0 0 6 V64 H14 V60 a3 3 0 0 0 0-6 Z" fill="url(#t4)" stroke="#8a5a00" stroke-width="1"/>
     <text x="35" y="61" text-anchor="middle" font-size="10" font-weight="900" fill="#6b3a00">G</text>
+  </svg>`,
+  trash: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 6 h18 M8 6 V4 a2 2 0 0 1 2-2 h4 a2 2 0 0 1 2 2 v2 M19 6 l-1 14 a2 2 0 0 1-2 2 H8 a2 2 0 0 1-2-2 L5 6"/>
+  </svg>`,
+  gift: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="8" width="18" height="13" rx="2"/>
+    <path d="M3 12 h18 M12 8 v13"/>
+    <path d="M12 8 a3 3 0 0 0 0-6 a3 3 0 0 0 0 6 Z"/>
   </svg>`
 };
- </script>
- <script>
-const SETTINGS_KEY = 'ardrop_settings_v9';
+       </script>
+       <script>
+const SETTINGS_KEY = 'ardrop_settings_v10';
 let settings = loadSettings();
 
 function loadSettings() {
@@ -539,22 +727,24 @@ function applySiteName(name) {
 
 const CATALOG = {
   shop: [
-    { id: 's1', qty: 100,  price: 89,   icon: 'ticket100',  discount: 0  },
-    { id: 's2', qty: 500,  price: 389,  icon: 'ticket500',  discount: 10 },
-    { id: 's3', qty: 1500, price: 989,  icon: 'ticket1500', discount: 25 },
-    { id: 's4', qty: 5000, price: 2699, icon: 'ticket5000', discount: 40 }
+    { id: 's1', qty: 100,  price: 89,   icon: 'ticket100',  discount: 0,  title: '100 тикетов' },
+    { id: 's2', qty: 500,  price: 389,  icon: 'ticket500',  discount: 10, title: '500 тикетов' },
+    { id: 's3', qty: 1500, price: 989,  icon: 'ticket1500', discount: 25, title: '1500 тикетов' },
+    { id: 's4', qty: 5000, price: 2699, icon: 'ticket5000', discount: 40, title: '5000 тикетов' }
   ],
   promo: [],
   gold: [
-    { id: 'g1', qty: 100,  price: 99,   icon: 'ingot100',  discount: 0  },
-    { id: 'g2', qty: 500,  price: 449,  icon: 'ingot500',  discount: 15 },
-    { id: 'g3', qty: 1000, price: 849,  icon: 'ingot1000', discount: 25 },
-    { id: 'g4', qty: 3000, price: 1899, icon: 'ingot3000', discount: 45 }
+    { id: 'g1', qty: 100,  price: 99,   icon: 'ingot100',  discount: 0,  title: '100 голды' },
+    { id: 'g2', qty: 500,  price: 449,  icon: 'ingot500',  discount: 15, title: '500 голды' },
+    { id: 'g3', qty: 1000, price: 849,  icon: 'ingot1000', discount: 25, title: '1000 голды' },
+    { id: 'g4', qty: 3000, price: 1899, icon: 'ingot3000', discount: 45, title: '3000 голды' }
   ]
 };
 
 let currentTab = 'shop';
-const STATE_KEY = 'ardrop_state_v9';
+let currentView = 'shop';
+
+const STATE_KEY = 'ardrop_state_v10';
 let state = loadState();
 
 function loadState() {
@@ -562,20 +752,40 @@ function loadState() {
     const raw = localStorage.getItem(STATE_KEY);
     if (raw) {
       const p = JSON.parse(raw);
-      return { balance: Number(p.balance) || 0 };
+      return {
+        balance: Number(p.balance) || 0,
+        cart: p.cart && typeof p.cart === 'object' ? p.cart : {}
+      };
     }
   } catch (e) {}
-  return { balance: 0 };
+  return { balance: 0, cart: {} };
 }
 function saveState() {
   try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch (e) {}
 }
 
+function findItem(id) {
+  let found = null;
+  Object.values(CATALOG).forEach(arr => {
+    const it = arr.find(x => x.id === id);
+    if (it) found = it;
+  });
+  return found;
+}
+
 const gridEl    = document.getElementById('grid');
 const balanceEl = document.getElementById('balance');
 const timerEl   = document.getElementById('timer');
+const viewShop  = document.getElementById('viewShop');
+const viewCart  = document.getElementById('viewCart');
+const cartBody  = document.getElementById('cartBody');
+const cartCount = document.getElementById('cartCount');
+const navBadge  = document.getElementById('navBadge');
 
-function render() {
+/* ============================================================
+   МАГАЗИН
+   ============================================================ */
+function renderShop() {
   const list = CATALOG[currentTab] || [];
   gridEl.innerHTML = '';
 
@@ -600,7 +810,7 @@ function render() {
           ${ICONS.coin}
           ${item.qty}
         </div>
-        <button class="buy" data-id="${item.id}">
+        <button class="buy" data-add="${item.id}">
           ${item.price} ₽
         </button>
       </div>
@@ -612,31 +822,195 @@ function render() {
 gridEl.addEventListener('click', e => {
   const btn = e.target.closest('button.buy');
   if (!btn) return;
-  const id = btn.dataset.id;
-  let found = null;
-  Object.values(CATALOG).forEach(arr => {
-    const it = arr.find(x => x.id === id);
-    if (it) found = it;
-  });
-  if (!found) return;
+  const id = btn.dataset.add;
+  const item = findItem(id);
+  if (!item) return;
 
-  state.balance += found.qty;
+  state.cart[id] = (state.cart[id] || 0) + 1;
+  saveState();
+  updateBadge();
+});
+
+/* ============================================================
+   КОРЗИНА
+   ============================================================ */
+function renderCart() {
+  const ids = Object.keys(state.cart).filter(id => state.cart[id] > 0);
+  cartBody.innerHTML = '';
+
+  if (ids.length === 0) {
+    cartCount.textContent = '0 товаров';
+    cartBody.innerHTML = `
+      <div class="cart-empty">
+        <h3>В корзине ничего нет</h3>
+        <p>Все товары можно найти в каталоге. Там точно найдётся что-то интересное!</p>
+        <button class="btn-orange" id="goShopBtn">Начать покупки</button>
+      </div>
+    `;
+    document.getElementById('goShopBtn').addEventListener('click', switchToShop);
+    return;
+  }
+
+  let total = 0;
+  let discount = 0;
+
+  ids.forEach(id => {
+    const item = findItem(id);
+    if (!item) return;
+    const count = state.cart[id];
+    const line = item.price * count;
+    total += line;
+    discount += (item.price * count * (item.discount || 0)) / 100;
+
+    const el = document.createElement('div');
+    el.className = 'cart-item';
+    el.innerHTML = `
+      <div class="thumb">${ICONS[item.icon] || ''}</div>
+      <div class="body">
+        <div class="price-row">${item.price} ₽</div>
+        <div class="title">${item.title}</div>
+        <span class="qty-tag">${ICONS.coin} ${item.qty}</span>
+        <div class="bottom">
+          <button class="trash" data-remove="${id}">${ICONS.trash}</button>
+          <button class="buy-btn" data-buy="${id}">КУПИТЬ</button>
+          <div class="stepper">
+            <button data-dec="${id}">−</button>
+            <span>${count}</span>
+            <button data-inc="${id}">+</button>
+          </div>
+        </div>
+      </div>
+    `;
+    cartBody.appendChild(el);
+  });
+
+  const finalTotal = Math.max(0, total - discount);
+  const summary = document.createElement('div');
+  summary.className = 'cart-summary';
+  summary.innerHTML = `
+    <div class="row discount">
+      <span>Скидка</span>
+      <span>-${discount.toFixed(0)} ₽</span>
+    </div>
+    <div class="row total">
+      <span>Итого</span>
+      <span>${finalTotal.toFixed(0)} ₽</span>
+    </div>
+    <button class="btn-buy" id="cartBuyAll">Купить</button>
+    <button class="btn-gift">${ICONS.gift} Купить в подарок</button>
+  `;
+  cartBody.appendChild(summary);
+
+  cartCount.textContent = ids.length + ' ' + (ids.length === 1 ? 'товар' : 'товаров');
+
+  document.getElementById('cartBuyAll').addEventListener('click', buyAll);
+}
+
+cartBody.addEventListener('click', e => {
+  const inc     = e.target.closest('[data-inc]');
+  const dec     = e.target.closest('[data-dec]');
+  const remove  = e.target.closest('[data-remove]');
+  const buyOne  = e.target.closest('[data-buy]');
+  if (inc) {
+    const id = inc.dataset.inc;
+    state.cart[id]++;
+    saveState();
+    renderCart();
+    updateBadge();
+    return;
+  }
+  if (dec) {
+    const id = dec.dataset.dec;
+    state.cart[id]--;
+    if (state.cart[id] <= 0) delete state.cart[id];
+    saveState();
+    renderCart();
+    updateBadge();
+    return;
+  }
+  if (remove) {
+    delete state.cart[remove.dataset.remove];
+    saveState();
+    renderCart();
+    updateBadge();
+    return;
+  }
+  if (buyOne) {
+    const id = buyOne.dataset.buy;
+    const item = findItem(id);
+    if (!item) return;
+    const count = state.cart[id];
+    state.balance += item.qty * count;
+    delete state.cart[id];
+    saveState();
+    balanceEl.textContent = state.balance;
+    renderCart();
+    updateBadge();
+    return;
+  }
+});
+
+function buyAll() {
+  const ids = Object.keys(state.cart).filter(id => state.cart[id] > 0);
+  if (ids.length === 0) return;
+  ids.forEach(id => {
+    const item = findItem(id);
+    if (!item) return;
+    state.balance += item.qty * state.cart[id];
+  });
+  state.cart = {};
   saveState();
   balanceEl.textContent = state.balance;
-});
+  renderCart();
+  updateBadge();
+}
+
+/* ============================================================
+   ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК МАГАЗИНА / ВИДОВ
+   ============================================================ */
+const tabsEl = document.getElementById('tabs');
 
 document.querySelectorAll('.tabs button').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentTab = btn.dataset.cat;
-    render();
+    switchToShop();
+    renderShop();
   });
 });
 
+function switchToShop() {
+  currentView = 'shop';
+  viewShop.style.display = '';
+  viewCart.style.display = 'none';
+  tabsEl.style.display = '';
+  setActiveNav('home');
+}
+function switchToCart() {
+  currentView = 'cart';
+  viewShop.style.display = 'none';
+  viewCart.style.display = '';
+  tabsEl.style.display = 'none';
+  setActiveNav('cart');
+  renderCart();
+}
+function setActiveNav(nav) {
+  document.querySelectorAll('.bottom-nav button').forEach(b => {
+    b.classList.toggle('active', b.dataset.nav === nav);
+  });
+}
+
+/* ============================================================
+   НИЖНЕЕ МЕНЮ
+   ============================================================ */
 document.querySelectorAll('.bottom-nav button').forEach(btn => {
   btn.addEventListener('click', () => {
     const nav = btn.dataset.nav;
+    if (nav === 'cart') {
+      switchToCart();
+      return;
+    }
     if (nav === 'promo') {
       openPromoModal();
       return;
@@ -647,11 +1021,27 @@ document.querySelectorAll('.bottom-nav button').forEach(btn => {
       balanceEl.textContent = state.balance;
       return;
     }
-    document.querySelectorAll('.bottom-nav button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+    if (nav === 'home') {
+      switchToShop();
+      return;
+    }
+    setActiveNav(nav);
   });
 });
 
+function updateBadge() {
+  const count = Object.values(state.cart).reduce((a, b) => a + b, 0);
+  if (count > 0) {
+    navBadge.style.display = '';
+    navBadge.textContent = count;
+  } else {
+    navBadge.style.display = 'none';
+  }
+}
+
+/* ============================================================
+   ТАЙМЕР
+   ============================================================ */
 function updateTimer() {
   const end = new Date();
   end.setDate(end.getDate() + 18);
@@ -665,6 +1055,9 @@ function updateTimer() {
 }
 setInterval(updateTimer, 30000);
 
+/* ============================================================
+   АДМИНКА
+   ============================================================ */
 let clickCount = 0;
 let clickTimer = null;
 brandBtn.addEventListener('click', () => {
@@ -760,14 +1153,9 @@ function applyPromo() {
   promoErr.textContent = '';
   promoOk.textContent = '';
 
-  if (!code) {
-    promoErr.textContent = 'Введите код';
-    return;
-  }
-  if (!PROMOS[code]) {
-    promoErr.textContent = 'Неверный промокод';
-    return;
-  }
+  if (!code) { promoErr.textContent = 'Введите код'; return; }
+  if (!PROMOS[code]) { promoErr.textContent = 'Неверный промокод'; return; }
+
   const amount = PROMOS[code];
   state.balance += amount;
   saveState();
@@ -795,7 +1183,8 @@ document.addEventListener('keydown', e => {
 applySiteName(settings.name);
 balanceEl.textContent = state.balance;
 updateTimer();
-render();
+renderShop();
+updateBadge();
 </script>
 </body>
- </html>
+</html>
