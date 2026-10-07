@@ -31,8 +31,6 @@
     padding-bottom: 76px;
     overflow-x: hidden;
   }
-
-  /* ---------- Верхняя панель ---------- */
   .topbar {
     position: sticky; top: 0; z-index: 30;
     background: linear-gradient(180deg, #12161d, #0f131a);
@@ -82,8 +80,6 @@
     box-shadow: 0 0 12px rgba(245,166,35,.35);
   }
   .avatar svg { width: 22px; height: 22px; }
-
-  /* ---------- Вкладки ---------- */
   .tabs {
     display: flex;
     gap: 6px;
@@ -128,8 +124,6 @@
     padding: 1px 6px;
     margin-left: 6px;
   }
-
-  /* ---------- Hero-баннер ---------- */
   .hero {
     margin: 14px;
     border-radius: 16px;
@@ -196,9 +190,9 @@
     position: relative; z-index: 1;
   }
   .hero-timer b { color: var(--accent); font-weight: 800; }
-
-  /* ---------- Сетка товаров ---------- */
-  .grid {
+</style>
+ </head>
+   .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
@@ -262,8 +256,6 @@
     cursor: not-allowed;
     box-shadow: none;
   }
-
-  /* ---------- Нижнее меню ---------- */
   .bottom-nav {
     position: fixed;
     bottom: 0; left: 0; right: 0;
@@ -295,8 +287,6 @@
   .bottom-nav button svg { width: 22px; height: 22px; }
   .bottom-nav button.active { color: var(--accent); }
   .bottom-nav button:active { transform: scale(.92); }
-
-  /* ---------- Тост ---------- */
   #toast {
     position: fixed;
     bottom: 90px; left: 50%;
@@ -321,8 +311,6 @@
   #toast svg { width: 18px; height: 18px; flex-shrink: 0; }
   #toast.show { transform: translateX(-50%) translateY(0); }
   #toast.error { border-left-color: var(--red); }
-
-  /* ---------- Модалки ---------- */
   .modal-back {
     position: fixed; inset: 0;
     background: rgba(0,0,0,.75);
@@ -399,8 +387,6 @@
   }
   .modal .hint { font-size: 12px; color: var(--dim); margin-top: 6px; }
   .modal .success { color: var(--green); font-size: 13px; margin-top: 8px; font-weight: 600; }
-
-  /* ---------- Надпись "потяни вверх" для мобильного скролла ---------- */
   .pull-hint {
     text-align: center;
     color: var(--dim);
@@ -416,6 +402,7 @@
   <div class="currency">
     <svg viewBox="0 0 24 24" fill="none">
       <circle cx="12" cy="12" r="10" fill="url(#cA)"/>
+      <text x="12" y="16.5" text-anchor="middle" font-size="11" font-weight="900" fill="#7a4f00">G</text>
       <defs><radialGradient id="cA" cx="35%" cy="30%">
         <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#f5a623"/>
       </radialGradient></defs>
@@ -466,7 +453,6 @@
 <div class="pull-hint">↓ ЛИСТАЙ ВНИЗ ↓</div>
 
 <div class="grid" id="grid"></div>
-
 <div class="bottom-nav">
   <button class="active" data-nav="home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -546,83 +532,80 @@
       <button class="btn-ok" id="adminSave">Сохранить</button>
     </div>
   </div>
- </div>
- <script>
+</div>
+
+<script>
 /* ============================================================
-   SVG-ИКОНКИ ТОВАРОВ
+   SVG-ИКОНКИ (буква G на брусках и на монете)
    ============================================================ */
 const ICONS = {
-  ticket: `<svg viewBox="0 0 64 64" fill="none">
-    <rect x="6" y="18" width="52" height="28" rx="4" fill="url(#tkG)" stroke="#8a5a00" stroke-width="1.5"/>
-    <circle cx="6" cy="32" r="4" fill="#0b0e13"/>
-    <circle cx="58" cy="32" r="4" fill="#0b0e13"/>
-    <path d="M22 24 h6 M22 30 h14 M22 36 h10" stroke="#5a3a00" stroke-width="2" stroke-linecap="round" opacity=".6"/>
-    <defs><linearGradient id="tkG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#f5a623"/>
+  ingot100: `<svg viewBox="0 0 64 64" fill="none">
+    <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#e08b00"/>
     </linearGradient></defs>
+    <path d="M14 42 L20 24 H44 L50 42 Z" fill="url(#g1)"/>
+    <path d="M20 24 H44 L42 30 H22 Z" fill="#fff2b8" opacity=".7"/>
+    <path d="M14 42 L50 42 L48 48 H16 Z" fill="#a35a00"/>
+    <text x="32" y="39" text-anchor="middle" font-size="11" font-weight="900" fill="#6b3a00">G</text>
   </svg>`,
-  ticketStack: `<svg viewBox="0 0 64 64" fill="none">
-    <rect x="6" y="26" width="48" height="22" rx="3" fill="#c98a1a" transform="rotate(-6 30 36)"/>
-    <rect x="8" y="20" width="48" height="22" rx="3" fill="#f5a623" transform="rotate(-3 32 30)"/>
-    <rect x="10" y="14" width="48" height="22" rx="3" fill="url(#tkS)" stroke="#8a5a00" stroke-width="1.3"/>
-    <path d="M20 20 h6 M20 26 h14 M20 32 h10" stroke="#5a3a00" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>
-    <defs><linearGradient id="tkS" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#f5a623"/>
+  ingot500: `<svg viewBox="0 0 64 64" fill="none">
+    <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#e08b00"/>
     </linearGradient></defs>
+    <path d="M10 40 L16 24 H40 L46 40 Z" fill="url(#g2)"/>
+    <path d="M16 24 H40 L38 30 H18 Z" fill="#fff2b8" opacity=".7"/>
+    <path d="M10 40 L46 40 L44 46 H12 Z" fill="#a35a00"/>
+    <path d="M22 46 L28 30 H52 L58 46 Z" fill="url(#g2)"/>
+    <path d="M28 30 H52 L50 36 H30 Z" fill="#fff2b8" opacity=".7"/>
+    <path d="M22 46 L58 46 L56 52 H24 Z" fill="#a35a00"/>
   </svg>`,
-  pass: `<svg viewBox="0 0 64 64" fill="none">
-    <rect x="8" y="14" width="48" height="36" rx="5" fill="url(#psG)" stroke="#8a5a00" stroke-width="1.5"/>
-    <circle cx="24" cy="32" r="9" fill="none" stroke="#5a3a00" stroke-width="2.5" opacity=".7"/>
-    <path d="M24 26 v6 l4 4" stroke="#5a3a00" stroke-width="2.2" stroke-linecap="round" opacity=".7"/>
-    <path d="M38 26 h12 M38 32 h9 M38 38 h12" stroke="#5a3a00" stroke-width="2" stroke-linecap="round" opacity=".5"/>
-    <defs><linearGradient id="psG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#ffd76a"/><stop offset="100%" stop-color="#e08f00"/>
+  ingot1000: `<svg viewBox="0 0 64 64" fill="none">
+    <defs><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#e08b00"/>
     </linearGradient></defs>
+    <path d="M6 40 L12 24 H36 L42 40 Z" fill="url(#g3)"/>
+    <path d="M12 24 H36 L34 30 H14 Z" fill="#fff2b8" opacity=".7"/>
+    <path d="M6 40 L42 40 L40 46 H8 Z" fill="#a35a00"/>
+    <path d="M22 40 L28 24 H52 L58 40 Z" fill="url(#g3)"/>
+    <path d="M28 24 H52 L50 30 H30 Z" fill="#fff2b8" opacity=".7"/>
+    <path d="M22 40 L58 40 L56 46 H24 Z" fill="#a35a00"/>
+    <path d="M14 46 L20 30 H44 L50 46 Z" fill="url(#g3)"/>
+    <path d="M20 30 H44 L42 36 H22 Z" fill="#fff2b8" opacity=".7"/>
+    <path d="M14 46 L50 46 L48 52 H16 Z" fill="#a35a00"/>
   </svg>`,
-  coin1: `<svg viewBox="0 0 64 64" fill="none">
-    <circle cx="32" cy="32" r="24" fill="url(#c1G)" stroke="#8a5a00" stroke-width="1.5"/>
-    <circle cx="32" cy="32" r="17" fill="none" stroke="#8a5a00" stroke-width="1.2" opacity=".4"/>
-    <path d="M26 32 h12 M32 24 v16" stroke="#7a4f00" stroke-width="3" stroke-linecap="round"/>
-    <defs><radialGradient id="c1G" cx="35%" cy="30%">
+  ingot3000: `<svg viewBox="0 0 64 64" fill="none">
+    <defs><linearGradient id="g4" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#e08b00"/>
+    </linearGradient></defs>
+    <path d="M4 42 L10 26 H34 L40 42 Z" fill="url(#g4)"/>
+    <path d="M10 26 H34 L32 32 H12 Z" fill="#fff2b8" opacity=".7"/>
+    <path d="M4 42 L40 42 L38 48 H6 Z" fill="#a35a00"/>
+    <path d="M24 42 L30 26 H54 L60 42 Z" fill="url(#g4)"/>
+    <path d="M30 26 H54 L52 32 H32 Z" fill="#fff2b8" opacity=".7"/>
+    <path d="M24 42 L60 42 L58 48 H26 Z" fill="#a35a00"/>
+    <path d="M14 30 L20 14 H44 L50 30 Z" fill="url(#g4)"/>
+    <path d="M20 14 H44 L42 20 H22 Z" fill="#fff2b8" opacity=".7"/>
+    <path d="M14 30 L50 30 L48 36 H16 Z" fill="#a35a00"/>
+  </svg>`,
+  coin: `<svg viewBox="0 0 64 64" fill="none">
+    <defs><radialGradient id="cg" cx="35%" cy="30%">
       <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#f5a623"/>
     </radialGradient></defs>
+    <circle cx="32" cy="32" r="26" fill="url(#cg)"/>
+    <circle cx="32" cy="32" r="20" fill="none" stroke="#8a5a00" stroke-width="1.5" opacity=".45"/>
+    <text x="32" y="42" text-anchor="middle" font-size="24" font-weight="900" fill="#7a4f00">G</text>
   </svg>`,
-  coin5: `<svg viewBox="0 0 64 64" fill="none">
-    <ellipse cx="24" cy="44" rx="18" ry="12" fill="#c98a1a"/>
-    <ellipse cx="26" cy="40" rx="18" ry="12" fill="#f5a623"/>
-    <ellipse cx="30" cy="34" rx="18" ry="12" fill="#ffc94d"/>
-    <ellipse cx="34" cy="28" rx="18" ry="12" fill="url(#c5G)"/>
-    <ellipse cx="34" cy="28" rx="12" ry="8" fill="none" stroke="#8a5a00" stroke-width="1" opacity=".4"/>
-    <defs><linearGradient id="c5G" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#f5a623"/>
-    </linearGradient></defs>
-  </svg>`,
-  coin10: `<svg viewBox="0 0 64 64" fill="none">
-    <circle cx="32" cy="32" r="24" fill="url(#c10G)" stroke="#8a5a00" stroke-width="1.5"/>
-    <text x="32" y="41" text-anchor="middle" font-size="22" font-weight="900" fill="#7a4f00">₳</text>
-    <defs><linearGradient id="c10G" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#e08f00"/>
-    </linearGradient></defs>
-  </svg>`,
-  chest: `<svg viewBox="0 0 64 64" fill="none">
-    <rect x="8" y="26" width="48" height="26" rx="3" fill="#8a5a00"/>
-    <rect x="8" y="20" width="48" height="12" rx="4" fill="#a86e00"/>
-    <path d="M8 32 h48" stroke="#5a3a00" stroke-width="1.5"/>
-    <rect x="28" y="28" width="8" height="10" rx="1.5" fill="#ffe28a"/>
-    <circle cx="32" cy="33" r="1.5" fill="#5a3a00"/>
-  </svg>`,
-  check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M20 6 L9 17 L4 12"/>
-  </svg>`,
-  plus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
-    <path d="M12 5 v14 M5 12 h14"/>
-  </svg>`
+  check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 L9 17 L4 12"/></svg>`,
+  bolt: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 L4 14 h7 l-1 8 L19 10 h-7 z"/></svg>`
 };
-
+   </script>
+   <script>
 /* ============================================================
-   НАСТРОЙКИ САЙТА
+   НАСТРОЙКИ САЙТА (название в админке)
    ============================================================ */
-const SETTINGS_KEY = 'ardrop_settings_v2';
+const SETTINGS_KEY = 'ardrop_settings_v3';
+let settings = loadSettings();
+
 function loadSettings() {
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
@@ -636,31 +619,200 @@ function loadSettings() {
 function saveSettings(s) {
   try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); } catch (e) {}
 }
-let settings = loadSettings();
-const brandBtn = document.getElementById('brandBtn');
 
-function esc(s) {
-  return String(s).replace(/[&<>"']/g, c => ({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-  }[c]));
+const brandBtn = document.getElementById('brandBtn');
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 function applySiteName(name) {
   const mid = Math.ceil(name.length / 2);
-  const left = name.slice(0, mid);
-  const right = name.slice(mid);
-  brandBtn.innerHTML = esc(left) + '<span>' + esc(right) + '</span>' + '<small>GAME STORE</small>';
+  brandBtn.innerHTML = escapeHtml(name.slice(0, mid)) +
+    '<span>' + escapeHtml(name.slice(mid)) + '</span>' +
+    '<small>GAME STORE</small>';
   document.title = name + ' — Магазин';
 }
 
 /* ============================================================
-   АДМИНКА: 5 КЛИКОВ ПО БРЕНДУ
+   КАТАЛОГ ТОВАРОВ
    ============================================================ */
-let clickCount = 0, clickTimer = null;
+const CATALOG = {
+  shop: [
+    { id: 's1', qty: 100,  price: 49,   icon: 'coin',      discount: 0 },
+    { id: 's2', qty: 700,  price: 249,  icon: 'coin',      discount: 0 },
+    { id: 's3', qty: 1500, price: 749,  icon: 'coin',      discount: 0 },
+    { id: 's4', qty: 3000, price: 1490, icon: 'coin',      discount: 0 }
+  ],
+  promo: [
+    { id: 'p1', qty: 100,  price: 89,   icon: 'ingot100',  discount: 0   },
+    { id: 'p2', qty: 500,  price: 389,  icon: 'ingot500',  discount: 10  },
+    { id: 'p3', qty: 1500, price: 989,  icon: 'ingot1000', discount: 25  },
+    { id: 'p4', qty: 5000, price: 2699, icon: 'ingot3000', discount: 40  }
+  ],
+  gold: [
+    { id: 'g1', qty: 100,  price: 119,  icon: 'ingot100',  discount: 0   },
+    { id: 'g2', qty: 500,  price: 499,  icon: 'ingot500',  discount: 15  },
+    { id: 'g3', qty: 1000, price: 899,  icon: 'ingot1000', discount: 25  },
+    { id: 'g4', qty: 3000, price: 1999, icon: 'ingot3000', discount: 45  }
+  ]
+};
+
+let currentTab = 'shop';
+
+/* ============================================================
+   СОСТОЯНИЕ (localStorage)
+   ============================================================ */
+const STATE_KEY = 'ardrop_state_v3';
+let state = loadState();
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STATE_KEY);
+    if (raw) {
+      const p = JSON.parse(raw);
+      return {
+        balance: Number(p.balance) || 0,
+        purchased: Array.isArray(p.purchased) ? p.purchased : []
+      };
+    }
+  } catch (e) {}
+  return { balance: 0, purchased: [] };
+}
+function saveState() {
+  try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch (e) {}
+}
+
+const gridEl    = document.getElementById('grid');
+const balanceEl = document.getElementById('balance');
+const toastEl   = document.getElementById('toast');
+const timerEl   = document.getElementById('timer');
+
+/* ============================================================
+   РЕНДЕР СЕТКИ
+   ============================================================ */
+function render() {
+  const list = CATALOG[currentTab] || [];
+  gridEl.innerHTML = '';
+  list.forEach(item => {
+    const bought = state.purchased.includes(item.id);
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="img">
+        ${item.discount ? `<span class="discount">-${item.discount}%</span>` : ''}
+        ${ICONS[item.icon] || ''}
+      </div>
+      <div class="info">
+        <div class="qty">
+          <svg viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" fill="url(#pQ)"/>
+            <defs><radialGradient id="pQ" cx="35%" cy="30%">
+              <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#f5a623"/>
+            </radialGradient></defs>
+          </svg>
+          ${item.qty}
+        </div>
+        <button class="buy" ${bought ? 'disabled' : ''} data-id="${item.id}">
+          ${bought ? '✓ Куплено' : item.price + ' ₽'}
+        </button>
+      </div>
+    `;
+    gridEl.appendChild(card);
+  });
+}
+
+/* ============================================================
+   ПОКУПКА
+   ============================================================ */
+gridEl.addEventListener('click', e => {
+  const btn = e.target.closest('button.buy');
+  if (!btn || btn.disabled) return;
+  const id = btn.dataset.id;
+  let found = null;
+  Object.values(CATALOG).forEach(arr => {
+    const it = arr.find(x => x.id === id);
+    if (it) found = it;
+  });
+  if (!found) return;
+
+  state.purchased.push(found.id);
+  state.balance += found.qty;
+  saveState();
+  balanceEl.textContent = state.balance;
+  render();
+  toast(ICONS.check + ' Зачислено ' + found.qty + ' голды', false);
+});
+
+/* ============================================================
+   ВКЛАДКИ
+   ============================================================ */
+document.querySelectorAll('.tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentTab = btn.dataset.cat;
+    render();
+  });
+});
+
+/* ============================================================
+   НИЖНЕЕ МЕНЮ
+   ============================================================ */
+document.querySelectorAll('.bottom-nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const nav = btn.dataset.nav;
+    if (nav === 'topup') {
+      state.balance += 1000;
+      saveState();
+      balanceEl.textContent = state.balance;
+      toast(ICONS.bolt + ' Баланс пополнен на 1000 (демо)', false);
+      return;
+    }
+    document.querySelectorAll('.bottom-nav button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+/* ============================================================
+   ТАЙМЕР СЕЗОНА
+   ============================================================ */
+function updateTimer() {
+  const end = new Date();
+  end.setDate(end.getDate() + 18);
+  end.setHours(end.getHours() + 17);
+  end.setMinutes(end.getMinutes() + 33);
+  const diff = end - new Date();
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  timerEl.textContent = d + 'д ' + h + 'ч ' + m + 'м';
+}
+setInterval(updateTimer, 30000);
+
+/* ============================================================
+   ТОСТ
+   ============================================================ */
+let toastTimer;
+function toast(html, isError) {
+  toastEl.innerHTML = html;
+  toastEl.classList.toggle('error', !!isError);
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2400);
+}
+
+/* ============================================================
+   АДМИНКА: 5 КЛИКОВ ПО ЛОГОТИПУ
+   ============================================================ */
+let clickCount = 0;
+let clickTimer = null;
 brandBtn.addEventListener('click', () => {
   clickCount++;
   clearTimeout(clickTimer);
   clickTimer = setTimeout(() => { clickCount = 0; }, 1500);
-  if (clickCount >= 5) { clickCount = 0; openPassModal(); }
+  if (clickCount >= 5) {
+    clickCount = 0;
+    openPassModal();
+  }
 });
 
 const modalPass = document.getElementById('modalPass');
@@ -673,16 +825,14 @@ function openPassModal() {
   modalPass.classList.add('show');
   setTimeout(() => passInput.focus(), 60);
 }
-function closePassModal() { modalPass.classList.remove('show'); }
-
-document.getElementById('passCancel').addEventListener('click', closePassModal);
+document.getElementById('passCancel').addEventListener('click', () => modalPass.classList.remove('show'));
 document.getElementById('passOk').addEventListener('click', tryLogin);
 passInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
 
 function tryLogin() {
   if (passInput.value === '1212') {
     passErr.textContent = '';
-    closePassModal();
+    modalPass.classList.remove('show');
     openAdminModal();
   } else {
     passErr.textContent = 'Неверный пароль';
@@ -701,14 +851,12 @@ function openAdminModal() {
   modalAdmin.classList.add('show');
   setTimeout(() => nameInput.focus(), 60);
 }
-function closeAdminModal() { modalAdmin.classList.remove('show'); }
-
-document.getElementById('adminClose').addEventListener('click', closeAdminModal);
+document.getElementById('adminClose').addEventListener('click', () => modalAdmin.classList.remove('show'));
 document.getElementById('adminSave').addEventListener('click', () => {
   const val = nameInput.value.trim();
   if (!val) {
     adminOk.style.color = 'var(--red)';
-    adminOk.textContent = 'Название не может быть пустым';
+    adminOk.textContent = 'Пустое название';
     return;
   }
   settings.name = val;
@@ -718,9 +866,7 @@ document.getElementById('adminSave').addEventListener('click', () => {
   adminOk.textContent = '✓ Сохранено';
   setTimeout(() => { adminOk.textContent = ''; }, 1500);
 });
-nameInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter') document.getElementById('adminSave').click();
-});
+
 [modalPass, modalAdmin].forEach(m => {
   m.addEventListener('click', e => { if (e.target === m) m.classList.remove('show'); });
 });
@@ -732,176 +878,11 @@ document.addEventListener('keydown', e => {
 });
 
 /* ============================================================
-   КАТАЛОГ
-   ============================================================ */
-const items = [
-  { id: 1, cat: 'shop', icon: 'ticket',      qty: 100,  price: 89,   discount: null },
-  { id: 2, cat: 'shop', icon: 'ticketStack', qty: 500,  price: 389,  discount: '-10%' },
-  { id: 3, cat: 'shop', icon: 'ticketStack', qty: 1500, price: 989,  discount: '-25%' },
-  { id: 4, cat: 'shop', icon: 'pass',        qty: 3000, price: 1690, discount: '-33%' },
-  { id: 5, cat: 'shop', icon: 'chest',       qty: 5000, price: 2699, discount: '-40%' },
-  { id: 6, cat: 'promo', icon: 'coin1',      qty: 100,  price: 49,   discount: '-50%' },
-  { id: 7, cat: 'promo', icon: 'coin5',      qty: 700,  price: 249,  discount: '-30%' },
-  { id: 8, cat: 'promo', icon: 'pass',       qty: 1500, price: 749,  discount: '-20%' },
-  { id: 9, cat: 'gold',  icon: 'coin10',     qty: 10000, price: 4990, discount: null },
-  { id: 10, cat: 'gold', icon: 'chest',      qty: 25000, price: 9990, discount: '-15%' },
-];
-
-/* ============================================================
-   СОСТОЯНИЕ
-   ============================================================ */
-const STORAGE_KEY = 'ardrop_state_v2';
-let state = loadState();
-function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const p = JSON.parse(raw);
-      return {
-        balance: Number(p.balance) || 0,
-        purchased: Array.isArray(p.purchased) ? p.purchased : []
-      };
-    }
-  } catch (e) {}
-  return { balance: 0, purchased: [] };
-}
-function saveState() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
-}
-
-let currentCat = 'shop';
-const gridEl    = document.getElementById('grid');
-const balanceEl = document.getElementById('balance');
-const toastEl   = document.getElementById('toast');
-
-/* ============================================================
-   РЕНДЕР
-   ============================================================ */
-function render() {
-  const list = items.filter(i => i.cat === currentCat);
-  gridEl.innerHTML = '';
-  list.forEach(item => {
-    const bought = state.purchased.includes(item.id);
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      ${item.discount ? `<span class="discount">${item.discount}</span>` : ''}
-      <div class="img">${ICONS[item.icon] || ''}</div>
-      <div class="info">
-        <div class="qty">
-          <svg viewBox="0 0 24 24" fill="none">
-            <rect x="3" y="8" width="18" height="10" rx="2" fill="#f5a623"/>
-            <circle cx="3" cy="13" r="1.6" fill="#0b0e13"/>
-            <circle cx="21" cy="13" r="1.6" fill="#0b0e13"/>
-            <path d="M9 11 h6 M9 15 h4" stroke="#0b0e13" stroke-width="1.6" stroke-linecap="round" opacity=".6"/>
-          </svg>
-          ${item.qty}
-        </div>
-        <button class="buy" ${bought ? 'disabled' : ''} data-id="${item.id}">
-          ${bought ? '✓ Куплено' : item.price + ' ₽'}
-        </button>
-      </div>
-    `;
-    gridEl.appendChild(card);
-  });
-}
-
-/* ============================================================
-   ПОКУПКА
-   ============================================================ */
-gridEl.addEventListener('click', e => {
-  const btn = e.target.closest('button');
-  if (!btn || btn.disabled) return;
-  const item = items.find(i => i.id === Number(btn.dataset.id));
-  if (!item) return;
-
-  state.purchased.push(item.id);
-  state.balance += item.qty;
-  saveState();
-  balanceEl.textContent = state.balance;
-  render();
-  toast(ICONS.check + ' Получено ' + item.qty + ' 🎟', false);
-});
-
-/* ============================================================
-   ПОПОЛНЕНИЕ
-   ============================================================ */
-function topup() {
-  const amount = 1000;
-  state.balance += amount;
-  saveState();
-  balanceEl.textContent = state.balance;
-  toast(ICONS.plus + ' Баланс пополнен на ' + amount, false);
-}
-
-/* ============================================================
-   ВКЛАДКИ
-   ============================================================ */
-document.querySelectorAll('.tabs button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentCat = btn.dataset.cat;
-    render();
-  });
-});
-
-/* ============================================================
-   НИЖНЕЕ МЕНЮ
-   ============================================================ */
-document.querySelectorAll('.bottom-nav button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const nav = btn.dataset.nav;
-    if (nav === 'topup') { topup(); return; }
-    if (nav === 'home') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      document.querySelectorAll('.bottom-nav button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      if (nav === 'shop') {
-        document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
-        document.querySelector('.tabs button[data-cat="shop"]').classList.add('active');
-        currentCat = 'shop';
-        render();
-      }
-    }
-  });
-});
-
-/* ============================================================
-   ТОСТ
-   ============================================================ */
-let toastTimer;
-function toast(html, isError) {
-  toastEl.innerHTML = html;
-  toastEl.classList.toggle('error', !!isError);
-  toastEl.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2400);
-}
-
-/* ============================================================
-   ТАЙМЕР СЕЗОНА (18 дней вперёд)
-   ============================================================ */
-const seasonEnd = Date.now() + 18 * 24 * 3600 * 1000 + 17 * 3600 * 1000 + 33 * 60 * 1000;
-function updateTimer() {
-  let diff = seasonEnd - Date.now();
-  if (diff < 0) diff = 0;
-  const d = Math.floor(diff / (24 * 3600 * 1000));
-  diff -= d * 24 * 3600 * 1000;
-  const h = Math.floor(diff / (3600 * 1000));
-  diff -= h * 3600 * 1000;
-  const m = Math.floor(diff / (60 * 1000));
-  document.getElementById('timer').textContent = d + 'д ' + h + 'ч ' + m + 'м';
-}
-setInterval(updateTimer, 30000);
-updateTimer();
-
-/* ============================================================
    СТАРТ
    ============================================================ */
 applySiteName(settings.name);
 balanceEl.textContent = state.balance;
+updateTimer();
 render();
 </script>
 </body>
