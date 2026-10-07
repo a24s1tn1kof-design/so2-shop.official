@@ -169,10 +169,12 @@
     font-weight: 800; font-size: 14px;
     cursor: pointer; font-family: inherit; letter-spacing: .5px;
   }
-  .card .buy:disabled {
-    background: var(--panel-2);
-    color: #484f58;
-    cursor: not-allowed;
+  .empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--dim);
+    padding: 60px 20px;
+    font-size: 14px;
   }
 
   .bottom-nav {
@@ -313,12 +315,12 @@
     </svg>
     Главная
   </button>
-  <button data-nav="shop">
+  <button data-nav="promo">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 6 h18 l-2 12 H5 Z"/>
-      <path d="M8 6 a4 4 0 0 1 8 0"/>
+      <path d="M3 9 a2 2 0 0 1 2-2 h14 a2 2 0 0 1 2 2 v1 a2 2 0 0 0 0 4 v1 a2 2 0 0 1-2 2 H5 a2 2 0 0 1-2-2 v-1 a2 2 0 0 0 0-4 Z"/>
+      <path d="M13 7 v10" stroke-dasharray="2 2"/>
     </svg>
-    Магазин
+    Промокод
   </button>
   <button data-nav="topup">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -385,6 +387,26 @@
   </div>
 </div>
 
+<div class="modal-back" id="modalPromo">
+  <div class="modal">
+    <h3>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9 a2 2 0 0 1 2-2 h14 a2 2 0 0 1 2 2 v1 a2 2 0 0 0 0 4 v1 a2 2 0 0 1-2 2 H5 a2 2 0 0 1-2-2 v-1 a2 2 0 0 0 0-4 Z"/>
+        <path d="M13 7 v10" stroke-dasharray="2 2"/>
+      </svg>
+      Активировать промокод
+    </h3>
+    <div class="sub">Введите код и нажмите «Применить»</div>
+    <input type="text" id="promoInput" placeholder="Например: ARDROP2025" autocomplete="off" style="text-transform: uppercase;">
+    <div class="err" id="promoErr"></div>
+    <div class="success" id="promoOk"></div>
+    <div class="row">
+      <button class="btn-cancel" id="promoCancel">Отмена</button>
+      <button class="btn-ok" id="promoApply">Применить</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const ICONS = {
   ingot100: `<svg viewBox="0 0 64 64" fill="none">
@@ -447,49 +469,46 @@ const ICONS = {
     <defs><linearGradient id="t1" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#e08b00"/>
     </linearGradient></defs>
-    <path d="M10 26 H54 V30 a3 3 0 0 0 0 6 V38 H10 V34 a3 3 0 0 0 0-6 Z" fill="url(#t1)"/>
-    <path d="M10 26 H54 V38 H10 Z" fill="none" stroke="#8a5a00" stroke-width="1"/>
-    <text x="32" y="35" text-anchor="middle" font-size="8" font-weight="900" fill="#6b3a00">ARDROP</text>
+    <path d="M8 26 H56 V30 a3 3 0 0 0 0 6 V40 H8 V36 a3 3 0 0 0 0-6 Z" fill="url(#t1)" stroke="#8a5a00" stroke-width="1"/>
+    <text x="32" y="37" text-anchor="middle" font-size="14" font-weight="900" fill="#6b3a00">G</text>
   </svg>`,
   ticket500: `<svg viewBox="0 0 64 64" fill="none">
     <defs><linearGradient id="t2" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#e08b00"/>
     </linearGradient></defs>
-    <path d="M8 18 H48 V23 a3 3 0 0 0 0 6 V32 H8 V28 a3 3 0 0 0 0-6 Z" fill="url(#t2)"/>
-    <path d="M8 18 H48 V32 H8 Z" fill="none" stroke="#8a5a00" stroke-width="1"/>
-    <text x="28" y="29" text-anchor="middle" font-size="7" font-weight="900" fill="#6b3a00">ARDROP</text>
-    <path d="M16 34 H56 V39 a3 3 0 0 0 0 6 V48 H16 V44 a3 3 0 0 0 0-6 Z" fill="url(#t2)"/>
-    <path d="M16 34 H56 V48 H16 Z" fill="none" stroke="#8a5a00" stroke-width="1"/>
-    <text x="36" y="45" text-anchor="middle" font-size="7" font-weight="900" fill="#6b3a00">ARDROP</text>
+    <path d="M8 14 H50 V18 a3 3 0 0 0 0 6 V28 H8 V24 a3 3 0 0 0 0-6 Z" fill="url(#t2)" stroke="#8a5a00" stroke-width="1"/>
+    <text x="29" y="25" text-anchor="middle" font-size="12" font-weight="900" fill="#6b3a00">G</text>
+    <path d="M14 32 H56 V36 a3 3 0 0 0 0 6 V46 H14 V42 a3 3 0 0 0 0-6 Z" fill="url(#t2)" stroke="#8a5a00" stroke-width="1"/>
+    <text x="35" y="43" text-anchor="middle" font-size="12" font-weight="900" fill="#6b3a00">G</text>
   </svg>`,
   ticket1500: `<svg viewBox="0 0 64 64" fill="none">
     <defs><linearGradient id="t3" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#e08b00"/>
     </linearGradient></defs>
-    <path d="M8 14 H48 V19 a3 3 0 0 0 0 6 V28 H8 V24 a3 3 0 0 0 0-6 Z" fill="url(#t3)"/>
-    <text x="28" y="25" text-anchor="middle" font-size="6" font-weight="900" fill="#6b3a00">ARDROP</text>
-    <path d="M12 26 H52 V31 a3 3 0 0 0 0 6 V40 H12 V36 a3 3 0 0 0 0-6 Z" fill="url(#t3)"/>
-    <text x="32" y="37" text-anchor="middle" font-size="6" font-weight="900" fill="#6b3a00">ARDROP</text>
-    <path d="M16 38 H56 V43 a3 3 0 0 0 0 6 V52 H16 V48 a3 3 0 0 0 0-6 Z" fill="url(#t3)"/>
-    <text x="36" y="49" text-anchor="middle" font-size="6" font-weight="900" fill="#6b3a00">ARDROP</text>
+    <path d="M6 10 H48 V14 a3 3 0 0 0 0 6 V24 H6 V20 a3 3 0 0 0 0-6 Z" fill="url(#t3)" stroke="#8a5a00" stroke-width="1"/>
+    <text x="27" y="21" text-anchor="middle" font-size="11" font-weight="900" fill="#6b3a00">G</text>
+    <path d="M10 26 H52 V30 a3 3 0 0 0 0 6 V40 H10 V36 a3 3 0 0 0 0-6 Z" fill="url(#t3)" stroke="#8a5a00" stroke-width="1"/>
+    <text x="31" y="37" text-anchor="middle" font-size="11" font-weight="900" fill="#6b3a00">G</text>
+    <path d="M14 42 H56 V46 a3 3 0 0 0 0 6 V56 H14 V52 a3 3 0 0 0 0-6 Z" fill="url(#t3)" stroke="#8a5a00" stroke-width="1"/>
+    <text x="35" y="53" text-anchor="middle" font-size="11" font-weight="900" fill="#6b3a00">G</text>
   </svg>`,
   ticket5000: `<svg viewBox="0 0 64 64" fill="none">
     <defs><linearGradient id="t4" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#e08b00"/>
     </linearGradient></defs>
-    <path d="M6 10 H46 V15 a3 3 0 0 0 0 6 V24 H6 V20 a3 3 0 0 0 0-6 Z" fill="url(#t4)"/>
-    <text x="26" y="21" text-anchor="middle" font-size="6" font-weight="900" fill="#6b3a00">ARDROP</text>
-    <path d="M10 22 H50 V27 a3 3 0 0 0 0 6 V36 H10 V32 a3 3 0 0 0 0-6 Z" fill="url(#t4)"/>
-    <text x="30" y="33" text-anchor="middle" font-size="6" font-weight="900" fill="#6b3a00">ARDROP</text>
-    <path d="M12 34 H52 V39 a3 3 0 0 0 0 6 V48 H12 V44 a3 3 0 0 0 0-6 Z" fill="url(#t4)"/>
-    <text x="32" y="45" text-anchor="middle" font-size="6" font-weight="900" fill="#6b3a00">ARDROP</text>
-    <path d="M16 46 H56 V51 a3 3 0 0 0 0 6 V60 H16 V56 a3 3 0 0 0 0-6 Z" fill="url(#t4)"/>
-    <text x="36" y="57" text-anchor="middle" font-size="6" font-weight="900" fill="#6b3a00">ARDROP</text>
+    <path d="M4 8 H46 V12 a3 3 0 0 0 0 6 V22 H4 V18 a3 3 0 0 0 0-6 Z" fill="url(#t4)" stroke="#8a5a00" stroke-width="1"/>
+    <text x="25" y="19" text-anchor="middle" font-size="10" font-weight="900" fill="#6b3a00">G</text>
+    <path d="M8 22 H50 V26 a3 3 0 0 0 0 6 V36 H8 V32 a3 3 0 0 0 0-6 Z" fill="url(#t4)" stroke="#8a5a00" stroke-width="1"/>
+    <text x="29" y="33" text-anchor="middle" font-size="10" font-weight="900" fill="#6b3a00">G</text>
+    <path d="M10 36 H52 V40 a3 3 0 0 0 0 6 V50 H10 V46 a3 3 0 0 0 0-6 Z" fill="url(#t4)" stroke="#8a5a00" stroke-width="1"/>
+    <text x="31" y="47" text-anchor="middle" font-size="10" font-weight="900" fill="#6b3a00">G</text>
+    <path d="M14 50 H56 V54 a3 3 0 0 0 0 6 V64 H14 V60 a3 3 0 0 0 0-6 Z" fill="url(#t4)" stroke="#8a5a00" stroke-width="1"/>
+    <text x="35" y="61" text-anchor="middle" font-size="10" font-weight="900" fill="#6b3a00">G</text>
   </svg>`
 };
-     </script>
-     <script>
-const SETTINGS_KEY = 'ardrop_settings_v6';
+ </script>
+ <script>
+const SETTINGS_KEY = 'ardrop_settings_v9';
 let settings = loadSettings();
 
 function loadSettings() {
@@ -525,22 +544,17 @@ const CATALOG = {
     { id: 's3', qty: 1500, price: 989,  icon: 'ticket1500', discount: 25 },
     { id: 's4', qty: 5000, price: 2699, icon: 'ticket5000', discount: 40 }
   ],
-  promo: [
-    { id: 'p1', qty: 100,  price: 89,   icon: 'ingot100',  discount: 0   },
-    { id: 'p2', qty: 500,  price: 389,  icon: 'ingot500',  discount: 10  },
-    { id: 'p3', qty: 1500, price: 989,  icon: 'ingot1000', discount: 25  },
-    { id: 'p4', qty: 5000, price: 2699, icon: 'ingot3000', discount: 40  }
-  ],
+  promo: [],
   gold: [
-    { id: 'g1', qty: 100,  price: 119,  icon: 'ingot100',  discount: 0   },
-    { id: 'g2', qty: 500,  price: 499,  icon: 'ingot500',  discount: 15  },
-    { id: 'g3', qty: 1000, price: 899,  icon: 'ingot1000', discount: 25  },
-    { id: 'g4', qty: 3000, price: 1999, icon: 'ingot3000', discount: 45  }
+    { id: 'g1', qty: 100,  price: 99,   icon: 'ingot100',  discount: 0  },
+    { id: 'g2', qty: 500,  price: 449,  icon: 'ingot500',  discount: 15 },
+    { id: 'g3', qty: 1000, price: 849,  icon: 'ingot1000', discount: 25 },
+    { id: 'g4', qty: 3000, price: 1899, icon: 'ingot3000', discount: 45 }
   ]
 };
 
 let currentTab = 'shop';
-const STATE_KEY = 'ardrop_state_v6';
+const STATE_KEY = 'ardrop_state_v9';
 let state = loadState();
 
 function loadState() {
@@ -548,13 +562,10 @@ function loadState() {
     const raw = localStorage.getItem(STATE_KEY);
     if (raw) {
       const p = JSON.parse(raw);
-      return {
-        balance: Number(p.balance) || 0,
-        purchased: Array.isArray(p.purchased) ? p.purchased : []
-      };
+      return { balance: Number(p.balance) || 0 };
     }
   } catch (e) {}
-  return { balance: 0, purchased: [] };
+  return { balance: 0 };
 }
 function saveState() {
   try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch (e) {}
@@ -567,8 +578,16 @@ const timerEl   = document.getElementById('timer');
 function render() {
   const list = CATALOG[currentTab] || [];
   gridEl.innerHTML = '';
+
+  if (list.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'empty';
+    empty.textContent = 'Здесь пока ничего нет';
+    gridEl.appendChild(empty);
+    return;
+  }
+
   list.forEach(item => {
-    const bought = state.purchased.includes(item.id);
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
@@ -581,8 +600,8 @@ function render() {
           ${ICONS.coin}
           ${item.qty}
         </div>
-        <button class="buy" ${bought ? 'disabled' : ''} data-id="${item.id}">
-          ${bought ? '✓ Куплено' : item.price + ' ₽'}
+        <button class="buy" data-id="${item.id}">
+          ${item.price} ₽
         </button>
       </div>
     `;
@@ -592,7 +611,7 @@ function render() {
 
 gridEl.addEventListener('click', e => {
   const btn = e.target.closest('button.buy');
-  if (!btn || btn.disabled) return;
+  if (!btn) return;
   const id = btn.dataset.id;
   let found = null;
   Object.values(CATALOG).forEach(arr => {
@@ -601,11 +620,9 @@ gridEl.addEventListener('click', e => {
   });
   if (!found) return;
 
-  state.purchased.push(found.id);
   state.balance += found.qty;
   saveState();
   balanceEl.textContent = state.balance;
-  render();
 });
 
 document.querySelectorAll('.tabs button').forEach(btn => {
@@ -620,6 +637,10 @@ document.querySelectorAll('.tabs button').forEach(btn => {
 document.querySelectorAll('.bottom-nav button').forEach(btn => {
   btn.addEventListener('click', () => {
     const nav = btn.dataset.nav;
+    if (nav === 'promo') {
+      openPromoModal();
+      return;
+    }
     if (nav === 'topup') {
       state.balance += 1000;
       saveState();
@@ -708,13 +729,66 @@ document.getElementById('adminSave').addEventListener('click', () => {
   setTimeout(() => { adminOk.textContent = ''; }, 1500);
 });
 
-[modalPass, modalAdmin].forEach(m => {
+/* ============================================================
+   ПРОМОКОД
+   ============================================================ */
+const modalPromo = document.getElementById('modalPromo');
+const promoInput = document.getElementById('promoInput');
+const promoErr   = document.getElementById('promoErr');
+const promoOk    = document.getElementById('promoOk');
+
+const PROMOS = {
+  'ARDROP2025': 500,
+  'WELCOME':    100,
+  'GOLD500':    500,
+  'BOOST':      1000
+};
+
+function openPromoModal() {
+  promoInput.value = '';
+  promoErr.textContent = '';
+  promoOk.textContent = '';
+  modalPromo.classList.add('show');
+  setTimeout(() => promoInput.focus(), 60);
+}
+document.getElementById('promoCancel').addEventListener('click', () => modalPromo.classList.remove('show'));
+document.getElementById('promoApply').addEventListener('click', applyPromo);
+promoInput.addEventListener('keydown', e => { if (e.key === 'Enter') applyPromo(); });
+
+function applyPromo() {
+  const code = promoInput.value.trim().toUpperCase();
+  promoErr.textContent = '';
+  promoOk.textContent = '';
+
+  if (!code) {
+    promoErr.textContent = 'Введите код';
+    return;
+  }
+  if (!PROMOS[code]) {
+    promoErr.textContent = 'Неверный промокод';
+    return;
+  }
+  const amount = PROMOS[code];
+  state.balance += amount;
+  saveState();
+  balanceEl.textContent = state.balance;
+  promoOk.textContent = '✓ +' + amount + ' G зачислено';
+  promoInput.value = '';
+  setTimeout(() => { modalPromo.classList.remove('show'); }, 1200);
+}
+
+modalPromo.addEventListener('click', e => {
+  if (e.target === modalPromo) modalPromo.classList.remove('show');
+});
+
+[modalPass, modalAdmin, modalPromo].forEach(m => {
   m.addEventListener('click', e => { if (e.target === m) m.classList.remove('show'); });
 });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     modalPass.classList.remove('show');
     modalAdmin.classList.remove('show');
+    modalPromo.classList.remove('show');
   }
 });
 
@@ -724,4 +798,4 @@ updateTimer();
 render();
 </script>
 </body>
-</html>
+ </html>
