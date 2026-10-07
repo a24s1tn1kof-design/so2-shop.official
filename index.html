@@ -125,8 +125,8 @@
   }
   .hero-timer b { color: var(--accent); font-weight: 800; }
 </style>
-</head>
-<style>
+ </head>
+ <style>
   .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -198,7 +198,7 @@
     font-size: 14px;
   }
 
-  .cart-page { padding: 14px 14px 200px; }
+  .cart-page { padding: 14px 14px 100px; }
   .cart-head {
     display: flex; align-items: center; justify-content: space-between;
     margin-bottom: 12px;
@@ -298,7 +298,6 @@
   }
 
   .cart-summary {
-    position: sticky; bottom: 76px;
     background: var(--panel);
     border: 1px solid var(--border);
     border-radius: 14px;
@@ -379,6 +378,7 @@
     width: 100%; max-width: 380px;
     padding: 22px;
     box-shadow: 0 20px 60px rgba(0,0,0,.6);
+    max-height: 90vh; overflow-y: auto;
   }
   .modal h3 {
     font-size: 17px; margin-bottom: 4px;
@@ -419,6 +419,70 @@
   .modal .err { color: var(--red); font-size: 12px; margin-top: 8px; min-height: 16px; font-weight: 600; }
   .modal .hint { font-size: 12px; color: var(--dim); margin-top: 6px; }
   .modal .success { color: var(--green); font-size: 13px; margin-top: 8px; font-weight: 600; }
+
+  /* ---------- Профиль ---------- */
+  .profile-page { padding: 14px 14px 100px; }
+  .profile-head {
+    text-align: center;
+    padding: 20px 0 24px;
+  }
+  .profile-avatar {
+    width: 84px; height: 84px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #1c222c, #12161d);
+    border: 2px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+    color: var(--accent);
+  }
+  .profile-avatar svg { width: 42px !important; height: 42px !important; }
+  .profile-name {
+    font-size: 20px; font-weight: 800;
+  }
+  .profile-id {
+    color: var(--muted); font-size: 13px;
+    margin-top: 4px; letter-spacing: 1px;
+  }
+  .section-title {
+    font-size: 12px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 2px;
+    font-weight: 700;
+    margin: 18px 4px 8px;
+  }
+  .panel-list {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .list-row {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    padding: 16px;
+    font-size: 15px; font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+  .list-row:last-child { border-bottom: none; }
+  .list-row.static { cursor: default; }
+  .list-row .arrow { color: var(--dim); font-size: 20px; line-height: 1; }
+  .list-row .accent b { color: var(--accent); }
+  .logout-btn {
+    width: 100%;
+    margin-top: 24px;
+    background: rgba(218,54,51,.12);
+    color: var(--red);
+    border: 1px solid rgba(218,54,51,.3);
+    padding: 16px;
+    border-radius: 14px;
+    font-weight: 800; font-size: 15px;
+    cursor: pointer; font-family: inherit;
+    letter-spacing: .5px;
+  }
 </style>
 </head>
 <body>
@@ -486,19 +550,71 @@
     <div id="cartBody"></div>
   </div>
  </div>
-   <div class="bottom-nav" id="bottomNav">
+ <div id="viewProfile" style="display:none;">
+  <div class="profile-page">
+    <div class="profile-head">
+      <div class="profile-avatar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </div>
+      <div class="profile-name" id="profileName">ArDrop User</div>
+      <div class="profile-id">ID <span id="profileId">0000000</span></div>
+    </div>
+
+    <div class="section-title">Аккаунт</div>
+    <div class="panel-list">
+      <button class="list-row" id="changeNameBtn">
+        <span>Изменить ник</span>
+        <span class="arrow">›</span>
+      </button>
+      <div class="list-row static">
+        <span>Баланс</span>
+        <span class="accent"><b id="profileBalance">0</b> G</span>
+      </div>
+      <button class="list-row" id="profileTopupBtn">
+        <span>Пополнить</span>
+        <span class="arrow">›</span>
+      </button>
+    </div>
+
+    <div class="section-title">Настройки</div>
+    <div class="panel-list">
+      <button class="list-row" id="langBtn">
+        <span>Язык сайта</span>
+        <span class="arrow"><span id="langValue">RUS</span> ›</span>
+      </button>
+      <button class="list-row" id="supportBtn">
+        <span>Техническая поддержка</span>
+        <span class="arrow">›</span>
+      </button>
+    </div>
+
+    <div class="section-title">Полезное</div>
+    <div class="panel-list">
+      <button class="list-row" data-info="about">О игре</button>
+      <button class="list-row" data-info="rules">Правила</button>
+      <button class="list-row" data-info="community">Сообщество</button>
+    </div>
+
+    <button class="logout-btn" id="logoutBtn">Выйти из аккаунта</button>
+  </div>
+</div>
+
+<div class="bottom-nav" id="bottomNav">
   <button class="active" data-nav="home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 10 L12 3 L21 10 V20 a1 1 0 0 1-1 1 h-5 v-6 h-6 v6 H4 a1 1 0 0 1-1-1 Z"/>
     </svg>
     Главная
   </button>
-  <button data-nav="shop">
+  <button data-nav="promo">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 6 h18 l-2 12 H5 Z"/>
-      <path d="M8 6 a4 4 0 0 1 8 0"/>
+      <path d="M3 9 a2 2 0 0 1 2-2 h14 a2 2 0 0 1 2 2 v1 a2 2 0 0 0 0 4 v1 a2 2 0 0 1-2 2 H5 a2 2 0 0 1-2-2 v-1 a2 2 0 0 0 0-4 Z"/>
+      <path d="M13 7 v10" stroke-dasharray="2 2"/>
     </svg>
-    Магазин
+    Промокод
   </button>
   <button data-nav="cart">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -556,13 +672,19 @@
       Настройки
     </h3>
     <div class="sub">Изменения сохраняются автоматически</div>
+
     <label for="nameInput">Название сайта</label>
     <input type="text" id="nameInput" placeholder="ArDrop" maxlength="20" autocomplete="off">
-    <div class="hint">Вторая половина слова выделяется цветом.</div>
     <div class="success" id="adminOk"></div>
+
+    <label for="giveGoldInput" style="margin-top:18px;">Выдать Gold</label>
+    <input type="number" id="giveGoldInput" placeholder="Например: 1000" min="0" step="1" autocomplete="off">
+    <div class="success" id="giveOk"></div>
+    <button class="btn-ok" id="giveBtn" style="width:100%; margin-top:12px; padding:12px; border-radius:10px; font-weight:800; font-size:14px; cursor:pointer; border:none; background:linear-gradient(180deg, var(--accent-2), var(--accent)); color:#0b0e13;">Выдать</button>
+
     <div class="row">
       <button class="btn-cancel" id="adminClose">Закрыть</button>
-      <button class="btn-ok" id="adminSave">Сохранить</button>
+      <button class="btn-ok" id="adminSave">Сохранить название</button>
     </div>
   </div>
 </div>
@@ -583,6 +705,29 @@
     <div class="row">
       <button class="btn-cancel" id="promoCancel">Отмена</button>
       <button class="btn-ok" id="promoApply">Применить</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-back" id="modalText">
+  <div class="modal">
+    <h3 id="modalTextTitle">Информация</h3>
+    <div class="sub" id="modalTextBody" style="line-height:1.5;">…</div>
+    <div class="row">
+      <button class="btn-ok" id="modalTextClose">Понятно</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-back" id="modalName">
+  <div class="modal">
+    <h3>Изменить ник</h3>
+    <div class="sub">Введите новый ник</div>
+    <input type="text" id="newNameInput" maxlength="16" autocomplete="off">
+    <div class="err" id="newNameErr"></div>
+    <div class="row">
+      <button class="btn-cancel" id="nameCancel">Отмена</button>
+      <button class="btn-ok" id="nameSave">Сохранить</button>
     </div>
   </div>
 </div>
@@ -638,11 +783,9 @@ const ICONS = {
     <path d="M14 30 L50 30 L48 36 H16 Z" fill="#a35a00"/>
   </svg>`,
   coin: `<svg viewBox="0 0 64 64" fill="none">
-    <defs>
-      <linearGradient id="cgText" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#fff3b0"/><stop offset="50%" stop-color="#ffd24d"/><stop offset="100%" stop-color="#e08b00"/>
-      </linearGradient>
-    </defs>
+    <defs><linearGradient id="cgText" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff3b0"/><stop offset="50%" stop-color="#ffd24d"/><stop offset="100%" stop-color="#e08b00"/>
+    </linearGradient></defs>
     <text x="32" y="50" text-anchor="middle" font-size="52" font-weight="900" fill="url(#cgText)" stroke="#8a5a00" stroke-width="1.2">G</text>
   </svg>`,
   ticket100: `<svg viewBox="0 0 64 64" fill="none">
@@ -696,7 +839,7 @@ const ICONS = {
 };
  </script>
  <script>
-const SETTINGS_KEY = 'ardrop_settings_v11';
+const SETTINGS_KEY = 'ardrop_settings_v14';
 let settings = loadSettings();
 
 function loadSettings() {
@@ -744,7 +887,7 @@ const CATALOG = {
 let currentTab = 'shop';
 let currentView = 'shop';
 
-const STATE_KEY = 'ardrop_state_v11';
+const STATE_KEY = 'ardrop_state_v14';
 let state = loadState();
 
 function loadState() {
@@ -755,11 +898,21 @@ function loadState() {
       return {
         balance: Number(p.balance) || 0,
         cart: p.cart && typeof p.cart === 'object' ? p.cart : {},
-        usedPromos: Array.isArray(p.usedPromos) ? p.usedPromos : []
+        usedPromos: Array.isArray(p.usedPromos) ? p.usedPromos : [],
+        nickname: typeof p.nickname === 'string' && p.nickname.trim() ? p.nickname : 'ArDrop User',
+        lang: p.lang === 'ENG' ? 'ENG' : 'RUS',
+        userId: p.userId || String(Math.floor(1000000 + Math.random() * 8999999))
       };
     }
   } catch (e) {}
-  return { balance: 0, cart: {}, usedPromos: [] };
+  return {
+    balance: 0,
+    cart: {},
+    usedPromos: [],
+    nickname: 'ArDrop User',
+    lang: 'RUS',
+    userId: String(Math.floor(1000000 + Math.random() * 8999999))
+  };
 }
 function saveState() {
   try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch (e) {}
@@ -774,15 +927,16 @@ function findItem(id) {
   return found;
 }
 
-const gridEl    = document.getElementById('grid');
-const balanceEl = document.getElementById('balance');
-const timerEl   = document.getElementById('timer');
-const viewShop  = document.getElementById('viewShop');
-const viewCart  = document.getElementById('viewCart');
-const cartBody  = document.getElementById('cartBody');
-const cartCount = document.getElementById('cartCount');
-const navBadge  = document.getElementById('navBadge');
-const tabsEl    = document.getElementById('tabs');
+const gridEl      = document.getElementById('grid');
+const balanceEl   = document.getElementById('balance');
+const timerEl     = document.getElementById('timer');
+const viewShop    = document.getElementById('viewShop');
+const viewCart    = document.getElementById('viewCart');
+const viewProfile = document.getElementById('viewProfile');
+const cartBody    = document.getElementById('cartBody');
+const cartCount   = document.getElementById('cartCount');
+const navBadge    = document.getElementById('navBadge');
+const tabsEl      = document.getElementById('tabs');
 
 /* ============================================================
    МАГАЗИН
@@ -836,32 +990,20 @@ gridEl.addEventListener('click', e => {
     const id = addBtn.dataset.add;
     if (!findItem(id)) return;
     state.cart[id] = 1;
-    saveState();
-    renderShop();
-    updateBadge();
-    return;
+    saveState(); renderShop(); updateBadge(); return;
   }
   if (incBtn) {
     const id = incBtn.dataset.inc;
     if (!findItem(id)) return;
     state.cart[id] = (state.cart[id] || 0) + 1;
-    saveState();
-    renderShop();
-    updateBadge();
-    return;
+    saveState(); renderShop(); updateBadge(); return;
   }
   if (decBtn) {
     const id = decBtn.dataset.dec;
     const current = state.cart[id] || 0;
-    if (current <= 1) {
-      delete state.cart[id];
-    } else {
-      state.cart[id] = current - 1;
-    }
-    saveState();
-    renderShop();
-    updateBadge();
-    return;
+    if (current <= 1) delete state.cart[id];
+    else state.cart[id] = current - 1;
+    saveState(); renderShop(); updateBadge(); return;
   }
 });
 
@@ -948,36 +1090,22 @@ cartBody.addEventListener('click', e => {
   if (inc) {
     const id = inc.dataset.incCart;
     state.cart[id]++;
-    saveState();
-    renderCart();
-    updateBadge();
-    return;
+    saveState(); renderCart(); updateBadge(); return;
   }
   if (dec) {
     const id = dec.dataset.decCart;
     if (state.cart[id] <= 1) delete state.cart[id];
     else state.cart[id]--;
-    saveState();
-    renderCart();
-    updateBadge();
-    return;
+    saveState(); renderCart(); updateBadge(); return;
   }
   if (remove) {
     delete state.cart[remove.dataset.remove];
-    saveState();
-    renderCart();
-    updateBadge();
-    return;
+    saveState(); renderCart(); updateBadge(); return;
   }
   if (buyOne) {
-    const id = buyOne.dataset.buy;
-    const item = findItem(id);
-    if (!item) return;
-    const count = state.cart[id];
-    state.balance += item.qty * count;
-    delete state.cart[id];
+    // ничего не зачисляем на баланс — просто убираем позицию
+    delete state.cart[buyOne.dataset.buy];
     saveState();
-    balanceEl.textContent = state.balance;
     renderCart();
     updateBadge();
     return;
@@ -987,45 +1115,51 @@ cartBody.addEventListener('click', e => {
 function buyAll() {
   const ids = Object.keys(state.cart).filter(id => state.cart[id] > 0);
   if (ids.length === 0) return;
-  ids.forEach(id => {
-    const item = findItem(id);
-    if (!item) return;
-    state.balance += item.qty * state.cart[id];
-  });
+  // не зачисляем ничего на баланс — только очищаем корзину
   state.cart = {};
   saveState();
-  balanceEl.textContent = state.balance;
   renderCart();
   updateBadge();
 }
 
 /* ============================================================
-   ВКЛАДКИ МАГАЗИНА
+   ВКЛАДКИ И ЭКРАНЫ
    ============================================================ */
 document.querySelectorAll('.tabs button').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentTab = btn.dataset.cat;
-    switchToShop();
+    switchToShop(false);
     renderShop();
   });
 });
 
-function switchToShop() {
+function switchToShop(activateNav) {
   currentView = 'shop';
   viewShop.style.display = '';
   viewCart.style.display = 'none';
+  viewProfile.style.display = 'none';
   tabsEl.style.display = '';
-  setActiveNav('home');
+  if (activateNav !== false) setActiveNav('home');
 }
 function switchToCart() {
   currentView = 'cart';
   viewShop.style.display = 'none';
   viewCart.style.display = '';
+  viewProfile.style.display = 'none';
   tabsEl.style.display = 'none';
   setActiveNav('cart');
   renderCart();
+}
+function switchToProfile() {
+  currentView = 'profile';
+  viewShop.style.display = 'none';
+  viewCart.style.display = 'none';
+  viewProfile.style.display = '';
+  tabsEl.style.display = 'none';
+  setActiveNav('profile');
+  renderProfile();
 }
 function setActiveNav(nav) {
   document.querySelectorAll('.bottom-nav button').forEach(b => {
@@ -1034,6 +1168,86 @@ function setActiveNav(nav) {
 }
 
 /* ============================================================
+   ПРОФИЛЬ
+   ============================================================ */
+function renderProfile() {
+  document.getElementById('profileName').textContent = state.nickname;
+  document.getElementById('profileId').textContent = state.userId;
+  document.getElementById('profileBalance').textContent = state.balance;
+  document.getElementById('langValue').textContent = state.lang;
+}
+
+document.getElementById('changeNameBtn').addEventListener('click', () => {
+  const input = document.getElementById('newNameInput');
+  const err = document.getElementById('newNameErr');
+  input.value = state.nickname;
+  err.textContent = '';
+  document.getElementById('modalName').classList.add('show');
+  setTimeout(() => input.focus(), 60);
+});
+document.getElementById('nameCancel').addEventListener('click', () => {
+  document.getElementById('modalName').classList.remove('show');
+});
+document.getElementById('nameSave').addEventListener('click', () => {
+  const val = document.getElementById('newNameInput').value.trim();
+  const err = document.getElementById('newNameErr');
+  if (!val) { err.textContent = 'Пустой ник'; return; }
+  state.nickname = val;
+  saveState();
+  document.getElementById('modalName').classList.remove('show');
+  renderProfile();
+});
+
+document.getElementById('profileTopupBtn').addEventListener('click', () => {
+  // переключаем на вкладку Gold
+  document.querySelectorAll('.tabs button').forEach(b => {
+    b.classList.toggle('active', b.dataset.cat === 'gold');
+  });
+  currentTab = 'gold';
+  switchToShop();
+  renderShop();
+});
+
+document.getElementById('langBtn').addEventListener('click', () => {
+  state.lang = state.lang === 'RUS' ? 'ENG' : 'RUS';
+  saveState();
+  renderProfile();
+});
+
+document.getElementById('supportBtn').addEventListener('click', () => {
+  openTextModal('Техническая поддержка', 'Напишите нам на support@ardrop.example — ответим в течение 24 часов.');
+});
+
+document.querySelectorAll('[data-info]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const info = btn.dataset.info;
+    const texts = {
+      about:     ['О игре', 'ArDrop — демо-проект. Все покупки локальные и никуда не отправляются.'],
+      rules:     ['Правила', '1. Не оскорблять других игроков.\n2. Не использовать читы.\n3. Соблюдать уважение в чате.'],
+      community: ['Сообщество', 'Присоединяйтесь к нашему сообществу — ссылки появятся позже.']
+    };
+    const [title, body] = texts[info] || ['Информация', '…'];
+    openTextModal(title, body);
+  });
+});
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  state.nickname = 'ArDrop User';
+  saveState();
+  renderProfile();
+});
+
+const modalText = document.getElementById('modalText');
+function openTextModal(title, body) {
+  document.getElementById('modalTextTitle').textContent = title;
+  document.getElementById('modalTextBody').textContent = body;
+  modalText.classList.add('show');
+}
+document.getElementById('modalTextClose').addEventListener('click', () => modalText.classList.remove('show'));
+modalText.addEventListener('click', e => { if (e.target === modalText) modalText.classList.remove('show'); });
+ </script>
+ <script>
+/* ============================================================
    НИЖНЕЕ МЕНЮ
    ============================================================ */
 document.querySelectorAll('.bottom-nav button').forEach(btn => {
@@ -1041,9 +1255,10 @@ document.querySelectorAll('.bottom-nav button').forEach(btn => {
     const nav = btn.dataset.nav;
     if (nav === 'cart') { switchToCart(); return; }
     if (nav === 'home') { switchToShop(); return; }
-    if (nav === 'shop') { switchToShop(); return; }
-    if (nav === 'gifts' || nav === 'profile') {
-      setActiveNav(nav);
+    if (nav === 'promo') { openPromoModal(); return; }
+    if (nav === 'profile') { switchToProfile(); return; }
+    if (nav === 'gifts') {
+      openTextModal('Подарки', 'Пока здесь пусто. Скоро добавим!');
       return;
     }
   });
@@ -1119,10 +1334,14 @@ function tryLogin() {
 const modalAdmin = document.getElementById('modalAdmin');
 const nameInput  = document.getElementById('nameInput');
 const adminOk    = document.getElementById('adminOk');
+const giveGoldInput = document.getElementById('giveGoldInput');
+const giveOk = document.getElementById('giveOk');
 
 function openAdminModal() {
   nameInput.value = settings.name;
   adminOk.textContent = '';
+  giveGoldInput.value = '';
+  giveOk.textContent = '';
   modalAdmin.classList.add('show');
   setTimeout(() => nameInput.focus(), 60);
 }
@@ -1142,8 +1361,25 @@ document.getElementById('adminSave').addEventListener('click', () => {
   setTimeout(() => { adminOk.textContent = ''; }, 1500);
 });
 
+document.getElementById('giveBtn').addEventListener('click', () => {
+  const amount = parseInt(giveGoldInput.value, 10);
+  if (!amount || amount <= 0) {
+    giveOk.style.color = 'var(--red)';
+    giveOk.textContent = 'Введите число больше 0';
+    return;
+  }
+  state.balance += amount;
+  saveState();
+  balanceEl.textContent = state.balance;
+  document.getElementById('profileBalance').textContent = state.balance;
+  giveOk.style.color = 'var(--green)';
+  giveOk.textContent = '✓ Выдано ' + amount + ' G';
+  giveGoldInput.value = '';
+  setTimeout(() => { giveOk.textContent = ''; }, 1500);
+});
+
 /* ============================================================
-   ПРОМОКОД (один раз на код)
+   ПРОМОКОД
    ============================================================ */
 const modalPromo = document.getElementById('modalPromo');
 const promoInput = document.getElementById('promoInput');
@@ -1185,6 +1421,7 @@ function applyPromo() {
   state.usedPromos.push(code);
   saveState();
   balanceEl.textContent = state.balance;
+  document.getElementById('profileBalance').textContent = state.balance;
   promoOk.textContent = '✓ +' + amount + ' G зачислено';
   promoInput.value = '';
   setTimeout(() => { modalPromo.classList.remove('show'); }, 1200);
@@ -1202,9 +1439,14 @@ document.addEventListener('keydown', e => {
     modalPass.classList.remove('show');
     modalAdmin.classList.remove('show');
     modalPromo.classList.remove('show');
+    modalText.classList.remove('show');
+    document.getElementById('modalName').classList.remove('show');
   }
 });
 
+/* ============================================================
+   СТАРТ
+   ============================================================ */
 applySiteName(settings.name);
 balanceEl.textContent = state.balance;
 updateTimer();
