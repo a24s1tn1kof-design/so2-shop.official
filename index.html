@@ -26,20 +26,15 @@
     font-family: 'Segoe UI', Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-  body {
-    min-height: 100vh;
-    padding-bottom: 76px;
-    overflow-x: hidden;
-  }
+  body { min-height: 100vh; padding-bottom: 76px; overflow-x: hidden; }
+  svg { max-width: 100%; display: block; }
+
   .topbar {
     position: sticky; top: 0; z-index: 30;
     background: linear-gradient(180deg, #12161d, #0f131a);
     border-bottom: 1px solid var(--border);
     padding: 10px 14px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    backdrop-filter: blur(10px);
+    display: flex; align-items: center; gap: 12px;
   }
   .currency {
     display: flex; align-items: center; gap: 6px;
@@ -47,152 +42,91 @@
     border: 1px solid var(--border);
     padding: 6px 10px;
     border-radius: 20px;
-    font-weight: 700;
-    font-size: 13px;
+    font-weight: 700; font-size: 13px;
   }
-  .currency svg { width: 16px; height: 16px; }
+  .currency svg { width: 16px !important; height: 16px !important; }
   .currency b { color: var(--accent); }
   .brand {
-    flex: 1;
-    text-align: center;
-    font-size: 20px;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--accent);
-    cursor: pointer;
-    user-select: none;
+    flex: 1; text-align: center;
+    font-size: 20px; font-weight: 800;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--accent); cursor: pointer; user-select: none;
   }
   .brand span { color: var(--text); }
-  .brand small {
-    display: block;
-    font-size: 8px;
-    color: var(--dim);
-    letter-spacing: 2px;
-    font-weight: 500;
-  }
+  .brand small { display: block; font-size: 8px; color: var(--dim); letter-spacing: 2px; font-weight: 500; }
   .avatar {
-    width: 40px; height: 40px;
-    border-radius: 10px;
+    width: 40px; height: 40px; border-radius: 10px;
     background: linear-gradient(135deg, #1c222c, #12161d);
     border: 2px solid var(--accent);
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 0 12px rgba(245,166,35,.35);
   }
-  .avatar svg { width: 22px; height: 22px; }
+  .avatar svg { width: 22px !important; height: 22px !important; }
+
   .tabs {
-    display: flex;
-    gap: 6px;
+    display: flex; gap: 6px;
     padding: 10px 14px;
     background: var(--panel);
     border-bottom: 1px solid var(--border);
     position: sticky; top: 61px; z-index: 25;
-    overflow-x: auto;
-    scrollbar-width: none;
+    overflow-x: auto; scrollbar-width: none;
   }
   .tabs::-webkit-scrollbar { display: none; }
   .tabs button {
-    flex-shrink: 0;
-    background: transparent;
+    flex-shrink: 0; background: transparent;
     border: 1px solid transparent;
-    color: var(--muted);
-    padding: 8px 18px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all .15s;
-    letter-spacing: .3px;
+    color: var(--muted); padding: 8px 18px;
+    border-radius: 20px; font-size: 13px; font-weight: 700;
+    cursor: pointer; font-family: inherit; transition: all .15s;
   }
   .tabs button.active {
     background: linear-gradient(180deg, var(--accent-2), var(--accent));
     color: #0b0e13;
     box-shadow: 0 4px 12px rgba(245,166,35,.3);
   }
-  .tabs button:hover:not(.active) {
-    color: var(--text);
-    background: var(--panel-2);
-  }
   .tabs .badge {
-    display: inline-block;
-    background: #fff;
-    color: #0b0e13;
-    font-size: 10px;
-    font-weight: 800;
-    border-radius: 10px;
-    padding: 1px 6px;
-    margin-left: 6px;
+    display: inline-block; background: #fff; color: #0b0e13;
+    font-size: 10px; font-weight: 800;
+    border-radius: 10px; padding: 1px 6px; margin-left: 6px;
   }
+
   .hero {
-    margin: 14px;
-    border-radius: 16px;
-    overflow: hidden;
+    margin: 14px; border-radius: 16px; overflow: hidden;
     position: relative;
     background: linear-gradient(135deg, #3a2a12, #1a130a);
     border: 1px solid #4a3418;
     min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: flex; flex-direction: column; justify-content: space-between;
     padding: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.4);
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(circle at 80% 20%, rgba(245,166,35,.25), transparent 60%),
-      radial-gradient(circle at 20% 80%, rgba(245,166,35,.15), transparent 55%);
-    pointer-events: none;
   }
   .hero-art {
-    position: absolute;
-    right: -30px; top: 50%;
+    position: absolute; right: -30px; top: 50%;
     transform: translateY(-50%);
-    width: 240px; height: 240px;
-    opacity: .85;
+    width: 240px; height: 240px; opacity: .85;
     pointer-events: none;
   }
   .hero-content { position: relative; z-index: 1; }
   .hero .label {
-    font-size: 11px;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-weight: 800;
+    font-size: 11px; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 2px; font-weight: 800;
   }
   .hero .title {
-    font-size: 34px;
-    font-weight: 900;
-    letter-spacing: 1px;
-    line-height: 1;
-    margin: 4px 0;
-    color: #fff;
-    text-shadow: 0 4px 20px rgba(245,166,35,.5);
+    font-size: 34px; font-weight: 900; letter-spacing: 1px;
+    line-height: 1; margin: 4px 0; color: #fff;
   }
   .hero .subtitle {
-    font-size: 15px;
-    color: var(--accent);
-    font-weight: 700;
-    letter-spacing: 3px;
+    font-size: 15px; color: var(--accent);
+    font-weight: 700; letter-spacing: 3px;
   }
   .hero-timer {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 14px;
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 600;
-    letter-spacing: .5px;
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 14px; font-size: 12px;
+    color: var(--muted); font-weight: 600;
     position: relative; z-index: 1;
   }
   .hero-timer b { color: var(--accent); font-weight: 800; }
 </style>
- </head>
-   .grid {
+</head>
+  .grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
@@ -203,122 +137,69 @@
     border: 1px solid var(--border);
     border-radius: 14px;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    display: flex; flex-direction: column;
     position: relative;
-    transition: transform .12s, border-color .15s;
   }
-  .card:active { transform: scale(.97); }
   .card .img {
     height: 110px;
     background: linear-gradient(135deg, #1c222c, #12161d);
     display: flex; align-items: center; justify-content: center;
     border-bottom: 1px solid var(--border);
-    position: relative;
+    position: relative; overflow: hidden;
   }
-  .card .img svg { width: 58px; height: 58px; }
+  .card .img > svg { width: 58px !important; height: 58px !important; }
   .card .discount {
     position: absolute; top: 8px; right: 8px;
-    background: var(--red);
-    color: #fff;
+    background: var(--red); color: #fff;
     font-size: 11px; font-weight: 800;
-    padding: 3px 8px;
-    border-radius: 6px;
-    letter-spacing: .3px;
+    padding: 3px 8px; border-radius: 6px;
   }
   .card .info { padding: 12px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
   .card .qty {
     display: flex; align-items: center; gap: 6px;
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--text);
-    letter-spacing: .5px;
+    font-size: 18px; font-weight: 800; color: var(--text);
   }
-  .card .qty svg { width: 18px; height: 18px; }
+  .card .qty > svg { width: 18px !important; height: 18px !important; }
   .card .buy {
     margin-top: auto;
     background: linear-gradient(180deg, var(--accent-2), var(--accent));
     color: #0b0e13;
-    border: none;
-    padding: 11px;
-    border-radius: 10px;
-    font-weight: 800;
-    font-size: 14px;
-    cursor: pointer;
-    font-family: inherit;
-    letter-spacing: .5px;
-    transition: transform .1s, box-shadow .15s;
+    border: none; padding: 11px; border-radius: 10px;
+    font-weight: 800; font-size: 14px;
+    cursor: pointer; font-family: inherit; letter-spacing: .5px;
   }
-  .card .buy:active { transform: scale(.96); }
   .card .buy:disabled {
     background: var(--panel-2);
     color: #484f58;
     cursor: not-allowed;
-    box-shadow: none;
   }
+
   .bottom-nav {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
+    position: fixed; bottom: 0; left: 0; right: 0;
     background: linear-gradient(180deg, #12161d, #0d1117);
     border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-around;
+    display: flex; justify-content: space-around;
     padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
     z-index: 40;
-    backdrop-filter: blur(10px);
   }
   .bottom-nav button {
-    background: transparent;
-    border: none;
+    background: transparent; border: none;
     color: var(--dim);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-    font-size: 10px;
-    font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all .15s;
-    flex: 1;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    font-size: 10px; font-weight: 600;
+    padding: 6px 12px; border-radius: 10px;
+    cursor: pointer; font-family: inherit; flex: 1;
   }
-  .bottom-nav button svg { width: 22px; height: 22px; }
+  .bottom-nav button svg { width: 22px !important; height: 22px !important; }
   .bottom-nav button.active { color: var(--accent); }
-  .bottom-nav button:active { transform: scale(.92); }
-  #toast {
-    position: fixed;
-    bottom: 90px; left: 50%;
-    transform: translateX(-50%) translateY(120px);
-    background: var(--panel-2);
-    border: 1px solid var(--border);
-    border-left: 4px solid var(--green);
-    color: var(--text);
-    padding: 12px 18px;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 13px;
-    box-shadow: 0 8px 24px rgba(0,0,0,.5);
-    z-index: 100;
-    max-width: 90vw;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: transform .3s;
-    pointer-events: none;
-  }
-  #toast svg { width: 18px; height: 18px; flex-shrink: 0; }
-  #toast.show { transform: translateX(-50%) translateY(0); }
-  #toast.error { border-left-color: var(--red); }
+
   .modal-back {
     position: fixed; inset: 0;
     background: rgba(0,0,0,.75);
     backdrop-filter: blur(4px);
     display: none;
     align-items: center; justify-content: center;
-    z-index: 200;
-    padding: 16px;
+    z-index: 200; padding: 16px;
   }
   .modal-back.show { display: flex; }
   .modal {
@@ -328,17 +209,12 @@
     width: 100%; max-width: 380px;
     padding: 22px;
     box-shadow: 0 20px 60px rgba(0,0,0,.6);
-    animation: modalIn .2s ease-out;
-  }
-  @keyframes modalIn {
-    from { opacity: 0; transform: scale(.95); }
-    to   { opacity: 1; transform: scale(1); }
   }
   .modal h3 {
     font-size: 17px; margin-bottom: 4px;
     display: flex; align-items: center; gap: 8px;
   }
-  .modal h3 svg { width: 20px; height: 20px; color: var(--accent); }
+  .modal h3 svg { width: 20px !important; height: 20px !important; color: var(--accent); }
   .modal .sub { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
   .modal label {
     display: block; font-size: 11px; color: var(--muted);
@@ -350,11 +226,8 @@
     background: var(--panel-2);
     border: 1px solid var(--border);
     color: var(--text);
-    padding: 12px 14px;
-    border-radius: 10px;
-    font-size: 15px;
-    font-family: inherit;
-    letter-spacing: 1px;
+    padding: 12px 14px; border-radius: 10px;
+    font-size: 15px; font-family: inherit; letter-spacing: 1px;
   }
   .modal input:focus {
     outline: none;
@@ -363,37 +236,19 @@
   }
   .modal .row { display: flex; gap: 10px; margin-top: 16px; }
   .modal .row button {
-    flex: 1; padding: 12px;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 14px;
-    cursor: pointer;
-    font-family: inherit;
+    flex: 1; padding: 12px; border-radius: 10px;
+    font-weight: 700; font-size: 14px;
+    cursor: pointer; font-family: inherit;
     border: 1px solid var(--border);
-    transition: all .15s;
   }
   .modal .btn-cancel { background: var(--panel-2); color: var(--muted); }
   .modal .btn-ok {
     background: linear-gradient(180deg, var(--accent-2), var(--accent));
-    color: #0b0e13;
-    border-color: var(--accent);
+    color: #0b0e13; border-color: var(--accent);
   }
-  .modal .err {
-    color: var(--red);
-    font-size: 12px;
-    margin-top: 8px;
-    min-height: 16px;
-    font-weight: 600;
-  }
+  .modal .err { color: var(--red); font-size: 12px; margin-top: 8px; min-height: 16px; font-weight: 600; }
   .modal .hint { font-size: 12px; color: var(--dim); margin-top: 6px; }
   .modal .success { color: var(--green); font-size: 13px; margin-top: 8px; font-weight: 600; }
-  .pull-hint {
-    text-align: center;
-    color: var(--dim);
-    font-size: 11px;
-    padding: 8px 0 4px;
-    letter-spacing: 1px;
-  }
 </style>
 </head>
 <body>
@@ -450,8 +305,6 @@
   </div>
 </div>
 
-<div class="pull-hint">↓ ЛИСТАЙ ВНИЗ ↓</div>
-
 <div class="grid" id="grid"></div>
 <div class="bottom-nav">
   <button class="active" data-nav="home">
@@ -490,8 +343,6 @@
     Профиль
   </button>
 </div>
-
-<div id="toast"></div>
 
 <div class="modal-back" id="modalPass">
   <div class="modal">
@@ -536,7 +387,7 @@
 
 <script>
 /* ============================================================
-   SVG-ИКОНКИ (буква G на брусках и на монете)
+   SVG-ИКОНКИ (буква G на брусках и монете)
    ============================================================ */
 const ICONS = {
   ingot100: `<svg viewBox="0 0 64 64" fill="none">
@@ -594,16 +445,14 @@ const ICONS = {
     <circle cx="32" cy="32" r="26" fill="url(#cg)"/>
     <circle cx="32" cy="32" r="20" fill="none" stroke="#8a5a00" stroke-width="1.5" opacity=".45"/>
     <text x="32" y="42" text-anchor="middle" font-size="24" font-weight="900" fill="#7a4f00">G</text>
-  </svg>`,
-  check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 L9 17 L4 12"/></svg>`,
-  bolt: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 L4 14 h7 l-1 8 L19 10 h-7 z"/></svg>`
+  </svg>`
 };
    </script>
    <script>
 /* ============================================================
-   НАСТРОЙКИ САЙТА (название в админке)
+   НАСТРОЙКИ САЙТА
    ============================================================ */
-const SETTINGS_KEY = 'ardrop_settings_v3';
+const SETTINGS_KEY = 'ardrop_settings_v4';
 let settings = loadSettings();
 
 function loadSettings() {
@@ -633,7 +482,7 @@ function applySiteName(name) {
 }
 
 /* ============================================================
-   КАТАЛОГ ТОВАРОВ
+   КАТАЛОГ
    ============================================================ */
 const CATALOG = {
   shop: [
@@ -659,9 +508,9 @@ const CATALOG = {
 let currentTab = 'shop';
 
 /* ============================================================
-   СОСТОЯНИЕ (localStorage)
+   СОСТОЯНИЕ
    ============================================================ */
-const STATE_KEY = 'ardrop_state_v3';
+const STATE_KEY = 'ardrop_state_v4';
 let state = loadState();
 
 function loadState() {
@@ -683,11 +532,10 @@ function saveState() {
 
 const gridEl    = document.getElementById('grid');
 const balanceEl = document.getElementById('balance');
-const toastEl   = document.getElementById('toast');
 const timerEl   = document.getElementById('timer');
 
 /* ============================================================
-   РЕНДЕР СЕТКИ
+   РЕНДЕР
    ============================================================ */
 function render() {
   const list = CATALOG[currentTab] || [];
@@ -739,7 +587,6 @@ gridEl.addEventListener('click', e => {
   saveState();
   balanceEl.textContent = state.balance;
   render();
-  toast(ICONS.check + ' Зачислено ' + found.qty + ' голды', false);
 });
 
 /* ============================================================
@@ -764,7 +611,6 @@ document.querySelectorAll('.bottom-nav button').forEach(btn => {
       state.balance += 1000;
       saveState();
       balanceEl.textContent = state.balance;
-      toast(ICONS.bolt + ' Баланс пополнен на 1000 (демо)', false);
       return;
     }
     document.querySelectorAll('.bottom-nav button').forEach(b => b.classList.remove('active'));
@@ -773,7 +619,7 @@ document.querySelectorAll('.bottom-nav button').forEach(btn => {
 });
 
 /* ============================================================
-   ТАЙМЕР СЕЗОНА
+   ТАЙМЕР
    ============================================================ */
 function updateTimer() {
   const end = new Date();
@@ -787,18 +633,6 @@ function updateTimer() {
   timerEl.textContent = d + 'д ' + h + 'ч ' + m + 'м';
 }
 setInterval(updateTimer, 30000);
-
-/* ============================================================
-   ТОСТ
-   ============================================================ */
-let toastTimer;
-function toast(html, isError) {
-  toastEl.innerHTML = html;
-  toastEl.classList.toggle('error', !!isError);
-  toastEl.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2400);
-}
 
 /* ============================================================
    АДМИНКА: 5 КЛИКОВ ПО ЛОГОТИПУ
@@ -886,4 +720,4 @@ updateTimer();
 render();
 </script>
 </body>
- </html>
+</html>
