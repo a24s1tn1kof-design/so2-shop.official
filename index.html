@@ -2,10 +2,11 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0e13">
 <title>ArDrop — Магазин</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   :root {
     --bg: #0b0e13;
     --panel: #12161d;
@@ -19,219 +20,313 @@
     --green: #3fb950;
     --red: #da3633;
   }
-  body {
-    font-family: 'Segoe UI', Arial, sans-serif;
+  html, body {
     background: var(--bg);
     color: var(--text);
-    min-height: 100vh;
+    font-family: 'Segoe UI', Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
-  header {
-    background: var(--panel);
+  body {
+    min-height: 100vh;
+    padding-bottom: 76px;
+    overflow-x: hidden;
+  }
+
+  /* ---------- Верхняя панель ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 30;
+    background: linear-gradient(180deg, #12161d, #0f131a);
     border-bottom: 1px solid var(--border);
-    padding: 14px 28px;
+    padding: 10px 14px;
     display: flex;
     align-items: center;
-    gap: 24px;
-    position: sticky; top: 0; z-index: 20;
+    gap: 12px;
+    backdrop-filter: blur(10px);
   }
-  .logo {
-    font-size: 20px; font-weight: 800; letter-spacing: 1.5px;
-    color: var(--accent);
+  .currency {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .currency svg { width: 16px; height: 16px; }
+  .currency b { color: var(--accent); }
+  .brand {
+    flex: 1;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
     text-transform: uppercase;
+    color: var(--accent);
     cursor: pointer;
     user-select: none;
   }
-  .logo span { color: var(--text); }
-  .logo small {
-    display: block; font-size: 10px; color: var(--dim);
-    letter-spacing: 2px; font-weight: 500; margin-top: 2px;
+  .brand span { color: var(--text); }
+  .brand small {
+    display: block;
+    font-size: 8px;
+    color: var(--dim);
+    letter-spacing: 2px;
+    font-weight: 500;
   }
-  nav { display: flex; gap: 6px; margin-left: 20px; flex-wrap: wrap; }
-  nav button {
-    background: transparent;
-    border: none;
-    color: var(--muted);
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all .15s;
-    font-family: inherit;
+  .avatar {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #1c222c, #12161d);
+    border: 2px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 12px rgba(245,166,35,.35);
   }
-  nav button:hover { color: var(--text); background: var(--panel-2); }
-  nav button.active { color: var(--accent); background: var(--panel-2); }
-  .balance {
-    margin-left: auto;
-    display: flex; align-items: center; gap: 10px;
-    background: var(--panel-2);
-    border: 1px solid var(--border);
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-weight: 700;
-    position: relative;
-  }
-  .balance .coin-icon {
-    width: 20px; height: 20px;
-    filter: drop-shadow(0 0 6px rgba(245,166,35,.5));
-  }
-  .balance b { color: var(--accent); }
-  .balance .unit { color: var(--muted); font-weight: 500; }
-  .float-plus {
-    position: absolute;
-    top: -10px; right: 12px;
-    color: var(--green);
-    font-weight: 800;
-    font-size: 15px;
-    pointer-events: none;
-    animation: floatUp 1s ease-out forwards;
-  }
-  @keyframes floatUp {
-    0%   { opacity: 0; transform: translateY(0); }
-    20%  { opacity: 1; }
-    100% { opacity: 0; transform: translateY(-38px); }
-  }
-  main { max-width: 1200px; margin: 0 auto; padding: 28px; }
-  .hero {
-    background: linear-gradient(120deg, #1a1f29, #12161d);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 28px 32px;
-    margin-bottom: 24px;
+  .avatar svg { width: 22px; height: 22px; }
+
+  /* ---------- Вкладки ---------- */
+  .tabs {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    position: relative;
-    overflow: hidden;
+    gap: 6px;
+    padding: 10px 14px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 61px; z-index: 25;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
-  .hero::after {
-    content: '';
-    position: absolute;
-    right: -80px; top: -80px;
-    width: 260px; height: 260px;
-    background: radial-gradient(circle, rgba(245,166,35,.12), transparent 70%);
-    pointer-events: none;
+  .tabs::-webkit-scrollbar { display: none; }
+  .tabs button {
+    flex-shrink: 0;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--muted);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all .15s;
+    letter-spacing: .3px;
   }
-  .hero h1 { font-size: 26px; margin-bottom: 6px; }
-  .hero p { color: var(--muted); font-size: 14px; }
-  .hero .btn-main {
+  .tabs button.active {
     background: linear-gradient(180deg, var(--accent-2), var(--accent));
     color: #0b0e13;
-    border: none;
-    padding: 14px 28px;
-    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(245,166,35,.3);
+  }
+  .tabs button:hover:not(.active) {
+    color: var(--text);
+    background: var(--panel-2);
+  }
+  .tabs .badge {
+    display: inline-block;
+    background: #fff;
+    color: #0b0e13;
+    font-size: 10px;
     font-weight: 800;
+    border-radius: 10px;
+    padding: 1px 6px;
+    margin-left: 6px;
+  }
+
+  /* ---------- Hero-баннер ---------- */
+  .hero {
+    margin: 14px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #3a2a12, #1a130a);
+    border: 1px solid #4a3418;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.4);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(245,166,35,.25), transparent 60%),
+      radial-gradient(circle at 20% 80%, rgba(245,166,35,.15), transparent 55%);
+    pointer-events: none;
+  }
+  .hero-art {
+    position: absolute;
+    right: -30px; top: 50%;
+    transform: translateY(-50%);
+    width: 240px; height: 240px;
+    opacity: .85;
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; }
+  .hero .label {
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 800;
+  }
+  .hero .title {
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    line-height: 1;
+    margin: 4px 0;
+    color: #fff;
+    text-shadow: 0 4px 20px rgba(245,166,35,.5);
+  }
+  .hero .subtitle {
     font-size: 15px;
-    cursor: pointer;
-    letter-spacing: .5px;
-    box-shadow: 0 4px 14px rgba(245,166,35,.35);
-    transition: transform .1s, box-shadow .15s;
-    font-family: inherit;
-    display: inline-flex;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 3px;
+  }
+  .hero-timer {
+    display: flex;
     align-items: center;
     gap: 8px;
-    z-index: 1;
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: .5px;
+    position: relative; z-index: 1;
   }
-  .hero .btn-main svg { width: 18px; height: 18px; }
-  .hero .btn-main:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(245,166,35,.45); }
-  .hero .btn-main:active { transform: translateY(0); }
-  h2.section {
-    font-size: 14px; color: var(--muted); text-transform: uppercase;
-    letter-spacing: 2px; margin-bottom: 16px; font-weight: 700;
-  }
+  .hero-timer b { color: var(--accent); font-weight: 800; }
+
+  /* ---------- Сетка товаров ---------- */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 14px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 4px 14px 20px;
   }
   .card {
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 14px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: transform .15s, border-color .15s, box-shadow .15s;
     position: relative;
+    transition: transform .12s, border-color .15s;
   }
-  .card:hover {
-    transform: translateY(-4px);
-    border-color: var(--accent);
-    box-shadow: 0 8px 24px rgba(245,166,35,.15);
-  }
+  .card:active { transform: scale(.97); }
   .card .img {
-    height: 120px;
+    height: 110px;
     background: linear-gradient(135deg, #1c222c, #12161d);
     display: flex; align-items: center; justify-content: center;
     border-bottom: 1px solid var(--border);
+    position: relative;
   }
-  .card .img svg { width: 64px; height: 64px; }
-  .card .tag {
-    position: absolute; top: 10px; left: 10px;
-    background: var(--accent); color: #0b0e13;
-    font-size: 10px; font-weight: 800;
-    padding: 3px 8px; border-radius: 4px;
-    letter-spacing: .5px;
-    z-index: 2;
+  .card .img svg { width: 58px; height: 58px; }
+  .card .discount {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--red);
+    color: #fff;
+    font-size: 11px; font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 6px;
+    letter-spacing: .3px;
   }
-  .card .tag.new  { background: var(--green); color: #fff; }
-  .card .tag.sale { background: var(--red);   color: #fff; }
-  .card .info { padding: 14px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
-  .card .name { font-weight: 600; font-size: 14px; }
-  .card .sub { font-size: 12px; color: var(--dim); margin-top: 2px; }
-  .card .price {
-    color: var(--accent); font-weight: 800; font-size: 15px;
+  .card .info { padding: 12px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .card .qty {
     display: flex; align-items: center; gap: 6px;
-  }
-  .card .price svg { width: 16px; height: 16px; }
-  .card button {
-    margin-top: auto;
-    background: var(--panel-2);
-    color: var(--accent);
-    border: 1px solid var(--border);
-    padding: 10px;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all .15s;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text);
     letter-spacing: .5px;
+  }
+  .card .qty svg { width: 18px; height: 18px; }
+  .card .buy {
+    margin-top: auto;
+    background: linear-gradient(180deg, var(--accent-2), var(--accent));
+    color: #0b0e13;
+    border: none;
+    padding: 11px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
     font-family: inherit;
+    letter-spacing: .5px;
+    transition: transform .1s, box-shadow .15s;
   }
-  .card button:hover { background: var(--accent); color: #0b0e13; border-color: var(--accent); }
-  .card button:disabled {
-    background: var(--panel-2); color: #484f58; border-color: var(--border);
+  .card .buy:active { transform: scale(.96); }
+  .card .buy:disabled {
+    background: var(--panel-2);
+    color: #484f58;
     cursor: not-allowed;
+    box-shadow: none;
   }
+
+  /* ---------- Нижнее меню ---------- */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(180deg, #12161d, #0d1117);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+    z-index: 40;
+    backdrop-filter: blur(10px);
+  }
+  .bottom-nav button {
+    background: transparent;
+    border: none;
+    color: var(--dim);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all .15s;
+    flex: 1;
+  }
+  .bottom-nav button svg { width: 22px; height: 22px; }
+  .bottom-nav button.active { color: var(--accent); }
+  .bottom-nav button:active { transform: scale(.92); }
+
+  /* ---------- Тост ---------- */
   #toast {
     position: fixed;
-    bottom: 24px; right: 24px;
+    bottom: 90px; left: 50%;
+    transform: translateX(-50%) translateY(120px);
     background: var(--panel-2);
+    border: 1px solid var(--border);
     border-left: 4px solid var(--green);
     color: var(--text);
-    padding: 14px 20px;
-    border-radius: 8px;
+    padding: 12px 18px;
+    border-radius: 10px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
     box-shadow: 0 8px 24px rgba(0,0,0,.5);
-    transform: translateX(400px);
-    transition: transform .3s;
     z-index: 100;
-    max-width: 340px;
+    max-width: 90vw;
     display: flex;
     align-items: center;
     gap: 10px;
+    transition: transform .3s;
+    pointer-events: none;
   }
   #toast svg { width: 18px; height: 18px; flex-shrink: 0; }
-  #toast.show { transform: translateX(0); }
+  #toast.show { transform: translateX(-50%) translateY(0); }
   #toast.error { border-left-color: var(--red); }
+
+  /* ---------- Модалки ---------- */
   .modal-back {
     position: fixed; inset: 0;
-    background: rgba(0,0,0,.65);
-    backdrop-filter: blur(3px);
+    background: rgba(0,0,0,.75);
+    backdrop-filter: blur(4px);
     display: none;
     align-items: center; justify-content: center;
     z-index: 200;
@@ -241,9 +336,9 @@
   .modal {
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 14px;
+    border-radius: 16px;
     width: 100%; max-width: 380px;
-    padding: 24px;
+    padding: 22px;
     box-shadow: 0 20px 60px rgba(0,0,0,.6);
     animation: modalIn .2s ease-out;
   }
@@ -252,13 +347,13 @@
     to   { opacity: 1; transform: scale(1); }
   }
   .modal h3 {
-    font-size: 18px; margin-bottom: 4px;
+    font-size: 17px; margin-bottom: 4px;
     display: flex; align-items: center; gap: 8px;
   }
   .modal h3 svg { width: 20px; height: 20px; color: var(--accent); }
-  .modal .sub { color: var(--muted); font-size: 13px; margin-bottom: 18px; }
+  .modal .sub { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
   .modal label {
-    display: block; font-size: 12px; color: var(--muted);
+    display: block; font-size: 11px; color: var(--muted);
     text-transform: uppercase; letter-spacing: 1px;
     margin-bottom: 6px; font-weight: 700;
   }
@@ -268,10 +363,9 @@
     border: 1px solid var(--border);
     color: var(--text);
     padding: 12px 14px;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 15px;
     font-family: inherit;
-    transition: border-color .15s;
     letter-spacing: 1px;
   }
   .modal input:focus {
@@ -279,93 +373,137 @@
     border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(245,166,35,.15);
   }
-  .modal .row { display: flex; gap: 10px; margin-top: 18px; }
+  .modal .row { display: flex; gap: 10px; margin-top: 16px; }
   .modal .row button {
-    flex: 1;
-    padding: 12px;
-    border-radius: 8px;
+    flex: 1; padding: 12px;
+    border-radius: 10px;
     font-weight: 700;
     font-size: 14px;
     cursor: pointer;
     font-family: inherit;
-    transition: all .15s;
     border: 1px solid var(--border);
+    transition: all .15s;
   }
   .modal .btn-cancel { background: var(--panel-2); color: var(--muted); }
-  .modal .btn-cancel:hover { color: var(--text); border-color: var(--dim); }
   .modal .btn-ok {
     background: linear-gradient(180deg, var(--accent-2), var(--accent));
     color: #0b0e13;
     border-color: var(--accent);
   }
-  .modal .btn-ok:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(245,166,35,.4); }
   .modal .err {
     color: var(--red);
-    font-size: 13px; margin-top: 10px;
-    min-height: 18px; font-weight: 600;
+    font-size: 12px;
+    margin-top: 8px;
+    min-height: 16px;
+    font-weight: 600;
   }
-  .modal .hint { font-size: 12px; color: var(--dim); margin-top: 8px; }
-  .modal .success { color: var(--green); font-size: 13px; margin-top: 10px; font-weight: 600; }
-  @media (max-width: 720px) {
-    header { padding: 12px 16px; gap: 12px; flex-wrap: wrap; }
-    nav { margin-left: 0; order: 3; width: 100%; }
-    nav button { padding: 8px 12px; font-size: 13px; }
-    .balance { padding: 6px 12px; font-size: 14px; }
-    main { padding: 16px; }
-    .hero { padding: 20px; }
-    .hero h1 { font-size: 20px; }
-    .hero .btn-main { width: 100%; justify-content: center; }
-    .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
-    .card .img { height: 90px; }
-    .card .img svg { width: 48px; height: 48px; }
+  .modal .hint { font-size: 12px; color: var(--dim); margin-top: 6px; }
+  .modal .success { color: var(--green); font-size: 13px; margin-top: 8px; font-weight: 600; }
+
+  /* ---------- Надпись "потяни вверх" для мобильного скролла ---------- */
+  .pull-hint {
+    text-align: center;
+    color: var(--dim);
+    font-size: 11px;
+    padding: 8px 0 4px;
+    letter-spacing: 1px;
   }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo" id="logoBtn">
-    Ar<span id="logoAccent">Drop</span>
+<div class="topbar">
+  <div class="currency">
+    <svg viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" fill="url(#cA)"/>
+      <defs><radialGradient id="cA" cx="35%" cy="30%">
+        <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#f5a623"/>
+      </radialGradient></defs>
+    </svg>
+    <b id="balance">0</b>
+  </div>
+  <div class="brand" id="brandBtn">
+    Ar<span>Drop</span>
     <small>GAME STORE</small>
   </div>
-  <nav>
-    <button class="active" data-cat="all">Все</button>
-    <button data-cat="coins">Валюта</button>
-    <button data-cat="skins">Скины</button>
-    <button data-cat="pass">Пропуска</button>
-  </nav>
-  <div class="balance" id="balanceBox">
-    <svg class="coin-icon" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="10" fill="url(#gCoin)"/>
-      <circle cx="12" cy="12" r="7" fill="none" stroke="#8a5a00" stroke-width="1.2" opacity=".5"/>
-      <text x="12" y="16.5" text-anchor="middle" font-size="11" font-weight="800" fill="#7a4f00">₳</text>
-      <defs>
-        <radialGradient id="gCoin" cx="35%" cy="30%">
-          <stop offset="0%" stop-color="#ffe28a"/>
-          <stop offset="100%" stop-color="#f5a623"/>
-        </radialGradient>
-      </defs>
+  <div class="avatar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
     </svg>
-    <b id="balance">0</b> <span class="unit">монет</span>
   </div>
-</header>
+</div>
 
-<main>
-  <div class="hero">
-    <div>
-      <h1>Магазин предметов</h1>
-      <p>Демо-режим: пополнение мгновенное, без реальной оплаты</p>
-    </div>
-    <button class="btn-main" id="topupBtn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M13 2 L4 14 h7 l-1 8 L19 10 h-7 z"/>
-      </svg>
-      Пополнить баланс
-    </button>
+<div class="tabs">
+  <button class="active" data-cat="shop">Battle Shop</button>
+  <button data-cat="promo">Акции <span class="badge">3</span></button>
+  <button data-cat="gold">Gold</button>
+</div>
+
+<div class="hero">
+  <svg class="hero-art" viewBox="0 0 200 200" fill="none">
+    <defs>
+      <linearGradient id="heroG" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#ffd76a"/>
+        <stop offset="100%" stop-color="#b87400"/>
+      </linearGradient>
+    </defs>
+    <path d="M100 10 L120 60 L180 70 L135 110 L150 170 L100 140 L50 170 L65 110 L20 70 L80 60 Z"
+          fill="url(#heroG)" opacity=".3"/>
+    <circle cx="100" cy="100" r="60" fill="none" stroke="url(#heroG)" stroke-width="2" opacity=".4"/>
+    <circle cx="100" cy="100" r="40" fill="none" stroke="url(#heroG)" stroke-width="1.5" opacity=".3"/>
+  </svg>
+  <div class="hero-content">
+    <div class="label">Сезон ArDrop</div>
+    <div class="title">GOLD<br>PASS</div>
+    <div class="subtitle">SEASON 1</div>
   </div>
-  <h2 class="section" id="sectionTitle">Все предметы</h2>
-  <div class="grid" id="grid"></div>
-</main>
+  <div class="hero-timer">
+    ЗАКОНЧИТСЯ ЧЕРЕЗ: <b id="timer">18д 17ч 33м</b>
+  </div>
+</div>
+
+<div class="pull-hint">↓ ЛИСТАЙ ВНИЗ ↓</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="bottom-nav">
+  <button class="active" data-nav="home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 10 L12 3 L21 10 V20 a1 1 0 0 1-1 1 h-5 v-6 h-6 v6 H4 a1 1 0 0 1-1-1 Z"/>
+    </svg>
+    Главная
+  </button>
+  <button data-nav="shop">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 6 h18 l-2 12 H5 Z"/>
+      <path d="M8 6 a4 4 0 0 1 8 0"/>
+    </svg>
+    Магазин
+  </button>
+  <button data-nav="topup">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M12 8 v8 M8 12 h8"/>
+    </svg>
+    Пополнить
+  </button>
+  <button data-nav="gifts">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="8" width="18" height="13" rx="2"/>
+      <path d="M3 12 h18 M12 8 v13"/>
+      <path d="M12 8 a3 3 0 0 0 0-6 a3 3 0 0 0 0 6 Z"/>
+    </svg>
+    Подарки
+  </button>
+  <button data-nav="profile">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </svg>
+    Профиль
+  </button>
+</div>
 
 <div id="toast"></div>
 
@@ -396,105 +534,101 @@
         <circle cx="12" cy="12" r="3"/>
         <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
       </svg>
-      Настройки сайта
+      Настройки
     </h3>
     <div class="sub">Изменения сохраняются автоматически</div>
     <label for="nameInput">Название сайта</label>
-    <input type="text" id="nameInput" placeholder="Например: ArDrop" maxlength="20" autocomplete="off">
-    <div class="hint">Акцентная часть — вторая половина слова (выделяется цветом).</div>
+    <input type="text" id="nameInput" placeholder="ArDrop" maxlength="20" autocomplete="off">
+    <div class="hint">Вторая половина слова выделяется цветом.</div>
     <div class="success" id="adminOk"></div>
     <div class="row">
       <button class="btn-cancel" id="adminClose">Закрыть</button>
       <button class="btn-ok" id="adminSave">Сохранить</button>
     </div>
   </div>
-                                     </div>
-                                     <script>
+ </div>
+ <script>
 /* ============================================================
-   SVG-ИКОНКИ ПРЕДМЕТОВ (свои, векторные)
+   SVG-ИКОНКИ ТОВАРОВ
    ============================================================ */
 const ICONS = {
-  coin500: `<svg viewBox="0 0 64 64" fill="none">
-    <circle cx="32" cy="32" r="26" fill="url(#coinA)"/>
-    <circle cx="32" cy="32" r="20" fill="none" stroke="#8a5a00" stroke-width="1.5" opacity=".45"/>
-    <path d="M26 26 L38 26 M26 32 L38 32 M32 20 L32 44" stroke="#7a4f00" stroke-width="3" stroke-linecap="round"/>
-    <defs><radialGradient id="coinA" cx="35%" cy="30%">
-      <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#f5a623"/>
-    </radialGradient></defs>
-  </svg>`,
-  coin1200: `<svg viewBox="0 0 64 64" fill="none">
-    <ellipse cx="24" cy="42" rx="20" ry="14" fill="#c98a1a"/>
-    <ellipse cx="26" cy="40" rx="20" ry="14" fill="#f5a623"/>
-    <ellipse cx="30" cy="36" rx="20" ry="14" fill="#ffc94d"/>
-    <ellipse cx="34" cy="32" rx="20" ry="14" fill="url(#coinB)"/>
-    <ellipse cx="34" cy="32" rx="14" ry="9" fill="none" stroke="#8a5a00" stroke-width="1.2" opacity=".45"/>
-    <defs><linearGradient id="coinB" x1="0" y1="0" x2="0" y2="1">
+  ticket: `<svg viewBox="0 0 64 64" fill="none">
+    <rect x="6" y="18" width="52" height="28" rx="4" fill="url(#tkG)" stroke="#8a5a00" stroke-width="1.5"/>
+    <circle cx="6" cy="32" r="4" fill="#0b0e13"/>
+    <circle cx="58" cy="32" r="4" fill="#0b0e13"/>
+    <path d="M22 24 h6 M22 30 h14 M22 36 h10" stroke="#5a3a00" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+    <defs><linearGradient id="tkG" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#f5a623"/>
     </linearGradient></defs>
   </svg>`,
-  diamond: `<svg viewBox="0 0 64 64" fill="none">
-    <path d="M32 6 L52 24 L32 58 L12 24 Z" fill="url(#diaG)"/>
-    <path d="M32 6 L52 24 L32 32 Z" fill="#7fd6ff" opacity=".35"/>
-    <path d="M32 6 L12 24 L32 32 Z" fill="#ffffff" opacity=".2"/>
-    <path d="M12 24 L32 32 L52 24" stroke="#1c6a94" stroke-width="1.2" fill="none"/>
-    <path d="M32 6 L32 58" stroke="#1c6a94" stroke-width="1" opacity=".4"/>
-    <defs><linearGradient id="diaG" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#a8e9ff"/><stop offset="100%" stop-color="#3fa9f5"/>
-    </linearGradient></defs>
-  </svg>`,
-  rifle: `<svg viewBox="0 0 64 64" fill="none" stroke="#f5a623" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M6 34 L44 30 L52 26 L58 26 M44 30 L46 40 L38 42 L36 34"/>
-    <path d="M20 34 L22 44 L30 44 L28 33"/>
-    <circle cx="52" cy="34" r="3" fill="#f5a623" stroke="none"/>
-  </svg>`,
-  knife: `<svg viewBox="0 0 64 64" fill="none" stroke="#cfd6de" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M8 40 L44 12 L56 20 L20 46 Z" fill="#8b949e" opacity=".35"/>
-    <path d="M8 40 L44 12 L56 20 L20 46 Z"/>
-    <path d="M14 44 L24 52 L34 48 L24 40 Z" fill="#5a6470" opacity=".4"/>
-    <path d="M14 44 L24 52 L34 48 L24 40 Z"/>
-  </svg>`,
-  flame: `<svg viewBox="0 0 64 64" fill="none">
-    <path d="M32 6 C36 18 48 22 48 36 C48 48 41 56 32 56 C23 56 16 48 16 36 C16 26 24 22 26 14 C28 20 30 22 32 22 C34 22 32 12 32 6 Z" fill="url(#flameG)"/>
-    <path d="M32 26 C34 34 40 36 40 44 C40 50 36 52 32 52 C28 52 24 50 24 44 C24 38 30 36 32 26 Z" fill="#ffe28a" opacity=".7"/>
-    <defs><linearGradient id="flameG" x1="0" y1="1" x2="0" y2="0">
-      <stop offset="0%" stop-color="#ff5b3a"/><stop offset="60%" stop-color="#ff9b21"/><stop offset="100%" stop-color="#ffd76a"/>
+  ticketStack: `<svg viewBox="0 0 64 64" fill="none">
+    <rect x="6" y="26" width="48" height="22" rx="3" fill="#c98a1a" transform="rotate(-6 30 36)"/>
+    <rect x="8" y="20" width="48" height="22" rx="3" fill="#f5a623" transform="rotate(-3 32 30)"/>
+    <rect x="10" y="14" width="48" height="22" rx="3" fill="url(#tkS)" stroke="#8a5a00" stroke-width="1.3"/>
+    <path d="M20 20 h6 M20 26 h14 M20 32 h10" stroke="#5a3a00" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>
+    <defs><linearGradient id="tkS" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#f5a623"/>
     </linearGradient></defs>
   </svg>`,
   pass: `<svg viewBox="0 0 64 64" fill="none">
-    <rect x="8" y="18" width="48" height="30" rx="4" fill="#f5a623"/>
-    <rect x="8" y="18" width="48" height="30" rx="4" stroke="#8a5a00" stroke-width="1.5"/>
-    <circle cx="20" cy="34" r="6" fill="#0b0e13" opacity=".35"/>
-    <path d="M30 30 h20 M30 36 h14" stroke="#0b0e13" stroke-width="2.5" stroke-linecap="round" opacity=".5"/>
-    <path d="M8 26 h48" stroke="#0b0e13" stroke-width="1.2" opacity=".3"/>
+    <rect x="8" y="14" width="48" height="36" rx="5" fill="url(#psG)" stroke="#8a5a00" stroke-width="1.5"/>
+    <circle cx="24" cy="32" r="9" fill="none" stroke="#5a3a00" stroke-width="2.5" opacity=".7"/>
+    <path d="M24 26 v6 l4 4" stroke="#5a3a00" stroke-width="2.2" stroke-linecap="round" opacity=".7"/>
+    <path d="M38 26 h12 M38 32 h9 M38 38 h12" stroke="#5a3a00" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+    <defs><linearGradient id="psG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffd76a"/><stop offset="100%" stop-color="#e08f00"/>
+    </linearGradient></defs>
   </svg>`,
-  star: `<svg viewBox="0 0 64 64" fill="none">
-    <path d="M32 6 L40 26 L60 28 L44 40 L50 60 L32 48 L14 60 L20 40 L4 28 L24 26 Z"
-          fill="url(#starG)" stroke="#8a5a00" stroke-width="1.5" stroke-linejoin="round"/>
-    <defs><linearGradient id="starG" x1="0" y1="0" x2="0" y2="1">
+  coin1: `<svg viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="24" fill="url(#c1G)" stroke="#8a5a00" stroke-width="1.5"/>
+    <circle cx="32" cy="32" r="17" fill="none" stroke="#8a5a00" stroke-width="1.2" opacity=".4"/>
+    <path d="M26 32 h12 M32 24 v16" stroke="#7a4f00" stroke-width="3" stroke-linecap="round"/>
+    <defs><radialGradient id="c1G" cx="35%" cy="30%">
+      <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#f5a623"/>
+    </radialGradient></defs>
+  </svg>`,
+  coin5: `<svg viewBox="0 0 64 64" fill="none">
+    <ellipse cx="24" cy="44" rx="18" ry="12" fill="#c98a1a"/>
+    <ellipse cx="26" cy="40" rx="18" ry="12" fill="#f5a623"/>
+    <ellipse cx="30" cy="34" rx="18" ry="12" fill="#ffc94d"/>
+    <ellipse cx="34" cy="28" rx="18" ry="12" fill="url(#c5G)"/>
+    <ellipse cx="34" cy="28" rx="12" ry="8" fill="none" stroke="#8a5a00" stroke-width="1" opacity=".4"/>
+    <defs><linearGradient id="c5G" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#f5a623"/>
     </linearGradient></defs>
+  </svg>`,
+  coin10: `<svg viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="24" fill="url(#c10G)" stroke="#8a5a00" stroke-width="1.5"/>
+    <text x="32" y="41" text-anchor="middle" font-size="22" font-weight="900" fill="#7a4f00">₳</text>
+    <defs><linearGradient id="c10G" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#e08f00"/>
+    </linearGradient></defs>
+  </svg>`,
+  chest: `<svg viewBox="0 0 64 64" fill="none">
+    <rect x="8" y="26" width="48" height="26" rx="3" fill="#8a5a00"/>
+    <rect x="8" y="20" width="48" height="12" rx="4" fill="#a86e00"/>
+    <path d="M8 32 h48" stroke="#5a3a00" stroke-width="1.5"/>
+    <rect x="28" y="28" width="8" height="10" rx="1.5" fill="#ffe28a"/>
+    <circle cx="32" cy="33" r="1.5" fill="#5a3a00"/>
   </svg>`,
   check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
     <path d="M20 6 L9 17 L4 12"/>
   </svg>`,
-  bolt: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M13 2 L4 14 h7 l-1 8 L19 10 h-7 z"/>
+  plus: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+    <path d="M12 5 v14 M5 12 h14"/>
   </svg>`
 };
 
 /* ============================================================
-   НАСТРОЙКИ САЙТА (localStorage)
+   НАСТРОЙКИ САЙТА
    ============================================================ */
-const SETTINGS_KEY = 'ardrop_settings_v1';
-
+const SETTINGS_KEY = 'ardrop_settings_v2';
 function loadSettings() {
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
     if (raw) {
-      const parsed = JSON.parse(raw);
-      if (parsed && typeof parsed.name === 'string' && parsed.name.trim()) {
-        return { name: parsed.name.trim() };
-      }
+      const p = JSON.parse(raw);
+      if (p && typeof p.name === 'string' && p.name.trim()) return { name: p.name.trim() };
     }
   } catch (e) {}
   return { name: 'ArDrop' };
@@ -502,41 +636,31 @@ function loadSettings() {
 function saveSettings(s) {
   try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); } catch (e) {}
 }
-
 let settings = loadSettings();
-const logoBtn = document.getElementById('logoBtn');
+const brandBtn = document.getElementById('brandBtn');
 
-function escapeHtml(s) {
+function esc(s) {
   return String(s).replace(/[&<>"']/g, c => ({
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
   }[c]));
 }
-
 function applySiteName(name) {
   const mid = Math.ceil(name.length / 2);
   const left = name.slice(0, mid);
   const right = name.slice(mid);
-  logoBtn.innerHTML =
-    escapeHtml(left) +
-    '<span id="logoAccent">' + escapeHtml(right) + '</span>' +
-    '<small>GAME STORE</small>';
+  brandBtn.innerHTML = esc(left) + '<span>' + esc(right) + '</span>' + '<small>GAME STORE</small>';
   document.title = name + ' — Магазин';
 }
 
 /* ============================================================
-   АДМИНКА: 5 КЛИКОВ ПО ЛОГОТИПУ
+   АДМИНКА: 5 КЛИКОВ ПО БРЕНДУ
    ============================================================ */
-let clickCount = 0;
-let clickTimer = null;
-
-logoBtn.addEventListener('click', () => {
+let clickCount = 0, clickTimer = null;
+brandBtn.addEventListener('click', () => {
   clickCount++;
   clearTimeout(clickTimer);
   clickTimer = setTimeout(() => { clickCount = 0; }, 1500);
-  if (clickCount >= 5) {
-    clickCount = 0;
-    openPassModal();
-  }
+  if (clickCount >= 5) { clickCount = 0; openPassModal(); }
 });
 
 const modalPass = document.getElementById('modalPass');
@@ -580,7 +704,6 @@ function openAdminModal() {
 function closeAdminModal() { modalAdmin.classList.remove('show'); }
 
 document.getElementById('adminClose').addEventListener('click', closeAdminModal);
-
 document.getElementById('adminSave').addEventListener('click', () => {
   const val = nameInput.value.trim();
   if (!val) {
@@ -595,11 +718,9 @@ document.getElementById('adminSave').addEventListener('click', () => {
   adminOk.textContent = '✓ Сохранено';
   setTimeout(() => { adminOk.textContent = ''; }, 1500);
 });
-
 nameInput.addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('adminSave').click();
 });
-
 [modalPass, modalAdmin].forEach(m => {
   m.addEventListener('click', e => { if (e.target === m) m.classList.remove('show'); });
 });
@@ -611,33 +732,34 @@ document.addEventListener('keydown', e => {
 });
 
 /* ============================================================
-   КАТАЛОГ ТОВАРОВ
+   КАТАЛОГ
    ============================================================ */
 const items = [
-  { id: 1, cat: 'coins', name: '500 монет',        sub: 'Базовый набор', price: 149,  icon: 'coin500' },
-  { id: 2, cat: 'coins', name: '1200 монет',       sub: 'Выгодно',       price: 299,  icon: 'coin1200', tag: 'ХИТ' },
-  { id: 3, cat: 'coins', name: '5000 монет',       sub: 'Максимум',      price: 1190, icon: 'diamond' },
-  { id: 4, cat: 'skins', name: 'Скин «Аврора»',    sub: 'Легендарный',   price: 890,  icon: 'rifle', tag: 'NEW', tagClass: 'new' },
-  { id: 5, cat: 'skins', name: 'Скин «Тень»',      sub: 'Эпический',     price: 540,  icon: 'knife' },
-  { id: 6, cat: 'skins', name: 'Скин «Пламя»',     sub: 'Редкий',        price: 320,  icon: 'flame' },
-  { id: 7, cat: 'pass',  name: 'Сезонный пропуск', sub: '90 дней',       price: 590,  icon: 'pass', tag: 'SALE', tagClass: 'sale' },
-  { id: 8, cat: 'pass',  name: 'Премиум',          sub: '30 дней',       price: 890,  icon: 'star' },
+  { id: 1, cat: 'shop', icon: 'ticket',      qty: 100,  price: 89,   discount: null },
+  { id: 2, cat: 'shop', icon: 'ticketStack', qty: 500,  price: 389,  discount: '-10%' },
+  { id: 3, cat: 'shop', icon: 'ticketStack', qty: 1500, price: 989,  discount: '-25%' },
+  { id: 4, cat: 'shop', icon: 'pass',        qty: 3000, price: 1690, discount: '-33%' },
+  { id: 5, cat: 'shop', icon: 'chest',       qty: 5000, price: 2699, discount: '-40%' },
+  { id: 6, cat: 'promo', icon: 'coin1',      qty: 100,  price: 49,   discount: '-50%' },
+  { id: 7, cat: 'promo', icon: 'coin5',      qty: 700,  price: 249,  discount: '-30%' },
+  { id: 8, cat: 'promo', icon: 'pass',       qty: 1500, price: 749,  discount: '-20%' },
+  { id: 9, cat: 'gold',  icon: 'coin10',     qty: 10000, price: 4990, discount: null },
+  { id: 10, cat: 'gold', icon: 'chest',      qty: 25000, price: 9990, discount: '-15%' },
 ];
 
 /* ============================================================
-   СОСТОЯНИЕ МАГАЗИНА
+   СОСТОЯНИЕ
    ============================================================ */
-const STORAGE_KEY = 'ardrop_state_v1';
+const STORAGE_KEY = 'ardrop_state_v2';
 let state = loadState();
-
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
-      const parsed = JSON.parse(raw);
+      const p = JSON.parse(raw);
       return {
-        balance: Number(parsed.balance) || 0,
-        purchased: Array.isArray(parsed.purchased) ? parsed.purchased : []
+        balance: Number(p.balance) || 0,
+        purchased: Array.isArray(p.purchased) ? p.purchased : []
       };
     }
   } catch (e) {}
@@ -647,53 +769,36 @@ function saveState() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
 }
 
-let currentCat = 'all';
-
-const gridEl       = document.getElementById('grid');
-const balanceEl    = document.getElementById('balance');
-const balanceBox   = document.getElementById('balanceBox');
-const toastEl      = document.getElementById('toast');
-const sectionTitle = document.getElementById('sectionTitle');
+let currentCat = 'shop';
+const gridEl    = document.getElementById('grid');
+const balanceEl = document.getElementById('balance');
+const toastEl   = document.getElementById('toast');
 
 /* ============================================================
-   РЕНДЕР СЕТКИ
+   РЕНДЕР
    ============================================================ */
 function render() {
-  const list = currentCat === 'all'
-    ? items
-    : items.filter(i => i.cat === currentCat);
-
-  sectionTitle.textContent = {
-    all:   'Все предметы',
-    coins: 'Игровая валюта',
-    skins: 'Скины',
-    pass:  'Пропуска и подписки'
-  }[currentCat];
-
+  const list = items.filter(i => i.cat === currentCat);
   gridEl.innerHTML = '';
   list.forEach(item => {
     const bought = state.purchased.includes(item.id);
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
-      ${item.tag ? `<span class="tag ${item.tagClass || ''}">${item.tag}</span>` : ''}
+      ${item.discount ? `<span class="discount">${item.discount}</span>` : ''}
       <div class="img">${ICONS[item.icon] || ''}</div>
       <div class="info">
-        <div>
-          <div class="name">${item.name}</div>
-          <div class="sub">${item.sub}</div>
-        </div>
-        <div class="price">
+        <div class="qty">
           <svg viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="10" fill="url(#pCoin)"/>
-            <defs><radialGradient id="pCoin" cx="35%" cy="30%">
-              <stop offset="0%" stop-color="#ffe28a"/><stop offset="100%" stop-color="#f5a623"/>
-            </radialGradient></defs>
+            <rect x="3" y="8" width="18" height="10" rx="2" fill="#f5a623"/>
+            <circle cx="3" cy="13" r="1.6" fill="#0b0e13"/>
+            <circle cx="21" cy="13" r="1.6" fill="#0b0e13"/>
+            <path d="M9 11 h6 M9 15 h4" stroke="#0b0e13" stroke-width="1.6" stroke-linecap="round" opacity=".6"/>
           </svg>
-          ${item.price}
+          ${item.qty}
         </div>
-        <button ${bought ? 'disabled' : ''} data-id="${item.id}">
-          ${bought ? '✓ Куплено' : 'Купить'}
+        <button class="buy" ${bought ? 'disabled' : ''} data-id="${item.id}">
+          ${bought ? '✓ Куплено' : item.price + ' ₽'}
         </button>
       </div>
     `;
@@ -711,43 +816,55 @@ gridEl.addEventListener('click', e => {
   if (!item) return;
 
   state.purchased.push(item.id);
-  state.balance += item.price;
+  state.balance += item.qty;
   saveState();
   balanceEl.textContent = state.balance;
-  floatPlus(item.price);
   render();
-  toast(ICONS.check + ' «' + item.name + '» зачислено (+' + item.price + ')', false);
+  toast(ICONS.check + ' Получено ' + item.qty + ' 🎟', false);
 });
 
 /* ============================================================
    ПОПОЛНЕНИЕ
    ============================================================ */
-document.getElementById('topupBtn').addEventListener('click', () => {
+function topup() {
   const amount = 1000;
   state.balance += amount;
   saveState();
   balanceEl.textContent = state.balance;
-  floatPlus(amount);
-  toast(ICONS.bolt + ' Баланс пополнен на ' + amount + ' (демо)', false);
-});
-
-function floatPlus(amount) {
-  const el = document.createElement('div');
-  el.className = 'float-plus';
-  el.textContent = '+' + amount;
-  balanceBox.appendChild(el);
-  setTimeout(() => el.remove(), 1000);
+  toast(ICONS.plus + ' Баланс пополнен на ' + amount, false);
 }
 
 /* ============================================================
-   КАТЕГОРИИ
+   ВКЛАДКИ
    ============================================================ */
-document.querySelectorAll('nav button').forEach(btn => {
+document.querySelectorAll('.tabs button').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentCat = btn.dataset.cat;
     render();
+  });
+});
+
+/* ============================================================
+   НИЖНЕЕ МЕНЮ
+   ============================================================ */
+document.querySelectorAll('.bottom-nav button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const nav = btn.dataset.nav;
+    if (nav === 'topup') { topup(); return; }
+    if (nav === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      document.querySelectorAll('.bottom-nav button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (nav === 'shop') {
+        document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+        document.querySelector('.tabs button[data-cat="shop"]').classList.add('active');
+        currentCat = 'shop';
+        render();
+      }
+    }
   });
 });
 
@@ -762,6 +879,23 @@ function toast(html, isError) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2400);
 }
+
+/* ============================================================
+   ТАЙМЕР СЕЗОНА (18 дней вперёд)
+   ============================================================ */
+const seasonEnd = Date.now() + 18 * 24 * 3600 * 1000 + 17 * 3600 * 1000 + 33 * 60 * 1000;
+function updateTimer() {
+  let diff = seasonEnd - Date.now();
+  if (diff < 0) diff = 0;
+  const d = Math.floor(diff / (24 * 3600 * 1000));
+  diff -= d * 24 * 3600 * 1000;
+  const h = Math.floor(diff / (3600 * 1000));
+  diff -= h * 3600 * 1000;
+  const m = Math.floor(diff / (60 * 1000));
+  document.getElementById('timer').textContent = d + 'д ' + h + 'ч ' + m + 'м';
+}
+setInterval(updateTimer, 30000);
+updateTimer();
 
 /* ============================================================
    СТАРТ
