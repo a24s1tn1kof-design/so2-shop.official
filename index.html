@@ -169,7 +169,27 @@
     font-weight: 800; font-size: 14px;
     cursor: pointer; font-family: inherit; letter-spacing: .5px;
   }
-  .card .buy:active { transform: scale(.97); }
+  .card .stepper {
+    margin-top: auto;
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(180deg, var(--accent-2), var(--accent));
+    border-radius: 10px;
+    padding: 4px;
+    color: #0b0e13;
+  }
+  .card .stepper button {
+    background: transparent; border: none;
+    color: #0b0e13;
+    font-size: 20px; font-weight: 800;
+    width: 34px; height: 34px;
+    cursor: pointer; font-family: inherit;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+  }
+  .card .stepper span {
+    font-weight: 900; font-size: 15px;
+    min-width: 24px; text-align: center;
+  }
   .empty {
     grid-column: 1 / -1;
     text-align: center;
@@ -178,28 +198,17 @@
     font-size: 14px;
   }
 
-  /* ---------- Корзина ---------- */
-  .cart-page {
-    padding: 14px 14px 200px;
-  }
+  .cart-page { padding: 14px 14px 200px; }
   .cart-head {
     display: flex; align-items: center; justify-content: space-between;
     margin-bottom: 12px;
   }
-  .cart-head h2 {
-    font-size: 20px; font-weight: 800;
-  }
-  .cart-head .count {
-    color: var(--muted); font-size: 13px; font-weight: 600;
-  }
-  .cart-empty {
-    text-align: center;
-    padding: 80px 20px;
-  }
+  .cart-head h2 { font-size: 20px; font-weight: 800; }
+  .cart-head .count { color: var(--muted); font-size: 13px; font-weight: 600; }
+  .cart-empty { text-align: center; padding: 80px 20px; }
   .cart-empty h3 {
     font-size: 18px; font-weight: 800;
-    margin-bottom: 10px; text-transform: uppercase;
-    letter-spacing: 1px;
+    margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;
   }
   .cart-empty p {
     color: var(--muted); font-size: 14px;
@@ -211,7 +220,6 @@
     border: none; padding: 14px 28px; border-radius: 10px;
     font-weight: 800; font-size: 15px;
     cursor: pointer; font-family: inherit;
-    letter-spacing: .5px;
     width: 100%; max-width: 320px;
   }
 
@@ -233,21 +241,17 @@
   }
   .cart-item .thumb svg { width: 44px !important; height: 44px !important; }
   .cart-item .body { flex: 1; min-width: 0; }
-  .cart-item .price-row {
-    color: var(--accent); font-weight: 800; font-size: 15px;
-  }
+  .cart-item .price-row { color: var(--accent); font-weight: 800; font-size: 15px; }
   .cart-item .title {
     font-size: 13px; color: var(--text);
-    margin: 2px 0 6px; font-weight: 600;
-    line-height: 1.3;
+    margin: 2px 0 6px; font-weight: 600; line-height: 1.3;
   }
   .cart-item .qty-tag {
     display: inline-flex; align-items: center; gap: 4px;
     background: var(--panel-2);
     border: 1px solid var(--border);
     padding: 3px 8px; border-radius: 6px;
-    font-size: 12px; font-weight: 700;
-    color: var(--accent);
+    font-size: 12px; font-weight: 700; color: var(--accent);
   }
   .cart-item .qty-tag svg { width: 12px !important; height: 12px !important; }
   .cart-item .bottom {
@@ -281,11 +285,9 @@
     padding: 4px 8px;
   }
   .cart-item .stepper button {
-    background: transparent;
-    border: none;
+    background: transparent; border: none;
     color: var(--text);
-    font-size: 18px;
-    width: 22px; height: 22px;
+    font-size: 18px; width: 22px; height: 22px;
     cursor: pointer; font-family: inherit;
     display: flex; align-items: center; justify-content: center;
     line-height: 1;
@@ -296,8 +298,7 @@
   }
 
   .cart-summary {
-    position: sticky;
-    bottom: 76px;
+    position: sticky; bottom: 76px;
     background: var(--panel);
     border: 1px solid var(--border);
     border-radius: 14px;
@@ -321,7 +322,6 @@
     padding: 14px; border-radius: 10px;
     font-weight: 800; font-size: 15px;
     cursor: pointer; font-family: inherit;
-    letter-spacing: .5px;
   }
   .cart-summary .btn-gift {
     width: 100%; margin-top: 8px;
@@ -474,7 +474,6 @@
       ЗАКОНЧИТСЯ ЧЕРЕЗ: <b id="timer">18д 17ч 33м</b>
     </div>
   </div>
-
   <div class="grid" id="grid"></div>
 </div>
 
@@ -487,12 +486,19 @@
     <div id="cartBody"></div>
   </div>
  </div>
- <div class="bottom-nav" id="bottomNav">
+   <div class="bottom-nav" id="bottomNav">
   <button class="active" data-nav="home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M3 10 L12 3 L21 10 V20 a1 1 0 0 1-1 1 h-5 v-6 h-6 v6 H4 a1 1 0 0 1-1-1 Z"/>
     </svg>
     Главная
+  </button>
+  <button data-nav="shop">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 6 h18 l-2 12 H5 Z"/>
+      <path d="M8 6 a4 4 0 0 1 8 0"/>
+    </svg>
+    Магазин
   </button>
   <button data-nav="cart">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -503,19 +509,13 @@
     Корзина
     <span class="nav-badge" id="navBadge" style="display:none;">0</span>
   </button>
-  <button data-nav="topup">
+  <button data-nav="gifts">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="9"/>
-      <path d="M12 8 v8 M8 12 h8"/>
+      <rect x="3" y="8" width="18" height="13" rx="2"/>
+      <path d="M3 12 h18 M12 8 v13"/>
+      <path d="M12 8 a3 3 0 0 0 0-6 a3 3 0 0 0 0 6 Z"/>
     </svg>
-    Пополнить
-  </button>
-  <button data-nav="promo">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M3 9 a2 2 0 0 1 2-2 h14 a2 2 0 0 1 2 2 v1 a2 2 0 0 0 0 4 v1 a2 2 0 0 1-2 2 H5 a2 2 0 0 1-2-2 v-1 a2 2 0 0 0 0-4 Z"/>
-      <path d="M13 7 v10" stroke-dasharray="2 2"/>
-    </svg>
-    Промокод
+    Подарки
   </button>
   <button data-nav="profile">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -694,9 +694,9 @@ const ICONS = {
     <path d="M12 8 a3 3 0 0 0 0-6 a3 3 0 0 0 0 6 Z"/>
   </svg>`
 };
-       </script>
-       <script>
-const SETTINGS_KEY = 'ardrop_settings_v10';
+ </script>
+ <script>
+const SETTINGS_KEY = 'ardrop_settings_v11';
 let settings = loadSettings();
 
 function loadSettings() {
@@ -744,7 +744,7 @@ const CATALOG = {
 let currentTab = 'shop';
 let currentView = 'shop';
 
-const STATE_KEY = 'ardrop_state_v10';
+const STATE_KEY = 'ardrop_state_v11';
 let state = loadState();
 
 function loadState() {
@@ -754,11 +754,12 @@ function loadState() {
       const p = JSON.parse(raw);
       return {
         balance: Number(p.balance) || 0,
-        cart: p.cart && typeof p.cart === 'object' ? p.cart : {}
+        cart: p.cart && typeof p.cart === 'object' ? p.cart : {},
+        usedPromos: Array.isArray(p.usedPromos) ? p.usedPromos : []
       };
     }
   } catch (e) {}
-  return { balance: 0, cart: {} };
+  return { balance: 0, cart: {}, usedPromos: [] };
 }
 function saveState() {
   try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch (e) {}
@@ -781,6 +782,7 @@ const viewCart  = document.getElementById('viewCart');
 const cartBody  = document.getElementById('cartBody');
 const cartCount = document.getElementById('cartCount');
 const navBadge  = document.getElementById('navBadge');
+const tabsEl    = document.getElementById('tabs');
 
 /* ============================================================
    МАГАЗИН
@@ -798,6 +800,7 @@ function renderShop() {
   }
 
   list.forEach(item => {
+    const count = state.cart[item.id] || 0;
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
@@ -810,9 +813,14 @@ function renderShop() {
           ${ICONS.coin}
           ${item.qty}
         </div>
-        <button class="buy" data-add="${item.id}">
-          ${item.price} ₽
-        </button>
+        ${count > 0
+          ? `<div class="stepper">
+               <button data-dec="${item.id}">−</button>
+               <span>${count}</span>
+               <button data-inc="${item.id}">+</button>
+             </div>`
+          : `<button class="buy" data-add="${item.id}">${item.price} ₽</button>`
+        }
       </div>
     `;
     gridEl.appendChild(card);
@@ -820,15 +828,41 @@ function renderShop() {
 }
 
 gridEl.addEventListener('click', e => {
-  const btn = e.target.closest('button.buy');
-  if (!btn) return;
-  const id = btn.dataset.add;
-  const item = findItem(id);
-  if (!item) return;
+  const addBtn = e.target.closest('[data-add]');
+  const incBtn = e.target.closest('[data-inc]');
+  const decBtn = e.target.closest('[data-dec]');
 
-  state.cart[id] = (state.cart[id] || 0) + 1;
-  saveState();
-  updateBadge();
+  if (addBtn) {
+    const id = addBtn.dataset.add;
+    if (!findItem(id)) return;
+    state.cart[id] = 1;
+    saveState();
+    renderShop();
+    updateBadge();
+    return;
+  }
+  if (incBtn) {
+    const id = incBtn.dataset.inc;
+    if (!findItem(id)) return;
+    state.cart[id] = (state.cart[id] || 0) + 1;
+    saveState();
+    renderShop();
+    updateBadge();
+    return;
+  }
+  if (decBtn) {
+    const id = decBtn.dataset.dec;
+    const current = state.cart[id] || 0;
+    if (current <= 1) {
+      delete state.cart[id];
+    } else {
+      state.cart[id] = current - 1;
+    }
+    saveState();
+    renderShop();
+    updateBadge();
+    return;
+  }
 });
 
 /* ============================================================
@@ -858,8 +892,7 @@ function renderCart() {
     const item = findItem(id);
     if (!item) return;
     const count = state.cart[id];
-    const line = item.price * count;
-    total += line;
+    total += item.price * count;
     discount += (item.price * count * (item.discount || 0)) / 100;
 
     const el = document.createElement('div');
@@ -874,9 +907,9 @@ function renderCart() {
           <button class="trash" data-remove="${id}">${ICONS.trash}</button>
           <button class="buy-btn" data-buy="${id}">КУПИТЬ</button>
           <div class="stepper">
-            <button data-dec="${id}">−</button>
+            <button data-dec-cart="${id}">−</button>
             <span>${count}</span>
-            <button data-inc="${id}">+</button>
+            <button data-inc-cart="${id}">+</button>
           </div>
         </div>
       </div>
@@ -907,12 +940,13 @@ function renderCart() {
 }
 
 cartBody.addEventListener('click', e => {
-  const inc     = e.target.closest('[data-inc]');
-  const dec     = e.target.closest('[data-dec]');
-  const remove  = e.target.closest('[data-remove]');
-  const buyOne  = e.target.closest('[data-buy]');
+  const inc    = e.target.closest('[data-inc-cart]');
+  const dec    = e.target.closest('[data-dec-cart]');
+  const remove = e.target.closest('[data-remove]');
+  const buyOne = e.target.closest('[data-buy]');
+
   if (inc) {
-    const id = inc.dataset.inc;
+    const id = inc.dataset.incCart;
     state.cart[id]++;
     saveState();
     renderCart();
@@ -920,9 +954,9 @@ cartBody.addEventListener('click', e => {
     return;
   }
   if (dec) {
-    const id = dec.dataset.dec;
-    state.cart[id]--;
-    if (state.cart[id] <= 0) delete state.cart[id];
+    const id = dec.dataset.decCart;
+    if (state.cart[id] <= 1) delete state.cart[id];
+    else state.cart[id]--;
     saveState();
     renderCart();
     updateBadge();
@@ -966,10 +1000,8 @@ function buyAll() {
 }
 
 /* ============================================================
-   ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК МАГАЗИНА / ВИДОВ
+   ВКЛАДКИ МАГАЗИНА
    ============================================================ */
-const tabsEl = document.getElementById('tabs');
-
 document.querySelectorAll('.tabs button').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
@@ -1007,25 +1039,13 @@ function setActiveNav(nav) {
 document.querySelectorAll('.bottom-nav button').forEach(btn => {
   btn.addEventListener('click', () => {
     const nav = btn.dataset.nav;
-    if (nav === 'cart') {
-      switchToCart();
+    if (nav === 'cart') { switchToCart(); return; }
+    if (nav === 'home') { switchToShop(); return; }
+    if (nav === 'shop') { switchToShop(); return; }
+    if (nav === 'gifts' || nav === 'profile') {
+      setActiveNav(nav);
       return;
     }
-    if (nav === 'promo') {
-      openPromoModal();
-      return;
-    }
-    if (nav === 'topup') {
-      state.balance += 1000;
-      saveState();
-      balanceEl.textContent = state.balance;
-      return;
-    }
-    if (nav === 'home') {
-      switchToShop();
-      return;
-    }
-    setActiveNav(nav);
   });
 });
 
@@ -1123,7 +1143,7 @@ document.getElementById('adminSave').addEventListener('click', () => {
 });
 
 /* ============================================================
-   ПРОМОКОД
+   ПРОМОКОД (один раз на код)
    ============================================================ */
 const modalPromo = document.getElementById('modalPromo');
 const promoInput = document.getElementById('promoInput');
@@ -1155,9 +1175,14 @@ function applyPromo() {
 
   if (!code) { promoErr.textContent = 'Введите код'; return; }
   if (!PROMOS[code]) { promoErr.textContent = 'Неверный промокод'; return; }
+  if (state.usedPromos.includes(code)) {
+    promoErr.textContent = 'Этот промокод уже активирован';
+    return;
+  }
 
   const amount = PROMOS[code];
   state.balance += amount;
+  state.usedPromos.push(code);
   saveState();
   balanceEl.textContent = state.balance;
   promoOk.textContent = '✓ +' + amount + ' G зачислено';
